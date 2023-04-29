@@ -7,3 +7,7 @@
 [submodule "Unity/AGA/Assets/Libs/towergenerator"]
 	path = Unity/AGA/Assets/Libs/towergenerator
 	url = https://github.com/cholushkin/towergenerator.git
+[submodule "Unity/AGA/Assets/Libs/xlua"]
+	path = Unity/AGA/Assets/Libs/xlua
+	url = https://github.com/cholushkin/xLua.git
+	branch = unity
