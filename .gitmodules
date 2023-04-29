@@ -1,3 +1,9 @@
 [submodule "Unity/AGA/Assets/Libs/gamelib"]
 	path = Unity/AGA/Assets/Libs/gamelib
 	url = https://github.com/cholushkin/gamelib.git
+[submodule "Unity/AGA/Assets/Libs/versionhistory"]
+	path = Unity/AGA/Assets/Libs/versionhistory
+	url = https://github.com/cholushkin/VersionHistory.git
+[submodule "Unity/AGA/Assets/Libs/towergenerator"]
+	path = Unity/AGA/Assets/Libs/towergenerator
+	url = https://github.com/cholushkin/towergenerator.git
