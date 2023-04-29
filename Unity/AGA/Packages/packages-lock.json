@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.dbrizov.naughtyattributes": {
+      "version": "https://github.com/cholushkin/NaughtyAttributes.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
+    },
+    "com.psydack.uimgui": {
+      "version": "https://github.com/cholushkin/uimgui.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "1957436cf805ff960e92aea2e50135289338164a"
+    },
     "com.unity.collab-proxy": {
       "version": "2.0.1",
       "depth": 0,
