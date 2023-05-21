@@ -11,3 +11,6 @@
 	path = Unity/AGA/Assets/Libs/xlua
 	url = https://github.com/cholushkin/xLua.git
 	branch = unity
+[submodule "Unity/AGA/Assets/Libs/uimgui"]
+	path = Unity/AGA/Assets/Libs/uimgui
+	url = https://github.com/cholushkin/uimgui
