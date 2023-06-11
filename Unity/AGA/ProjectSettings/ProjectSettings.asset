@@ -635,7 +635,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: UNITY_PIPELINE_URP;UIMGUI_REMOVE_IMPLOT
+    Standalone: UNITY_PIPELINE_URP;UIMGUI_REMOVE_IMPLOT;GAMELIB_LOG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
