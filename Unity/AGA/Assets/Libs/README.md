@@ -7,3 +7,4 @@
 * xLua ( submodule from the fork on https://github.com/cholushkin/xLua.git#unity) - C# lua integration. Full repo is on master branch. "unity" branch is used for Unity integration.
 * Unity Toon Shader (unity package com.unity.toonshader, samples are located in Libs/Unity Toon Shader) - Anime style shaders, toon shading, facial animation example
 * ProBuilder ( unity package, samples are located in Libs/ProBuilder )
+* qonsole (submodule on https://github.com/cholushkin/qonsole.git)

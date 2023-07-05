@@ -14,3 +14,6 @@
 [submodule "Unity/AGA/Assets/Libs/uimgui"]
 	path = Unity/AGA/Assets/Libs/uimgui
 	url = https://github.com/cholushkin/uimgui
+[submodule "Unity/AGA/Assets/Libs/qonsole"]
+	path = Unity/AGA/Assets/Libs/qonsole
+	url = https://github.com/cholushkin/qonsole.git

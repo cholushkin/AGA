@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/RnD/ImGUI/ImGUITest.unity
     guid: 1596d8fcb6c58ec43ab9d7fed7bfb50f
+  - enabled: 1
+    path: Assets/Game/Scenes/Game.unity
+    guid: 3eda69b9dc09cae4fa7044f685abbad0
+  - enabled: 1
+    path: Assets/Game/Scenes/Shareable.unity
+    guid: 610a0c6332d790e40b9812d16353559a
   m_configObjects: {}
