@@ -7,3 +7,6 @@
 [submodule "Unity/AGA/Assets/Libs/towergenerator"]
 	path = Unity/AGA/Assets/Libs/towergenerator
 	url = https://github.com/cholushkin/towergenerator.git
+[submodule "Unity/AGA/Assets/Libs/uconsole"]
+	path = Unity/AGA/Assets/Libs/uconsole
+	url = https://github.com/cholushkin/uconsole.git
