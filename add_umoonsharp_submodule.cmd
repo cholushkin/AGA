@@ -1,0 +1,1 @@
+GamelibScripts\add_submodule.py https://github.com/cholushkin/umoonsharp.git Unity/AGA/Assets/Libs/umoonsharp

@@ -10,3 +10,6 @@
 [submodule "Unity/AGA/Assets/Libs/uconsole"]
 	path = Unity/AGA/Assets/Libs/uconsole
 	url = https://github.com/cholushkin/uconsole.git
+[submodule "Unity/AGA/Assets/Libs/umoonsharp"]
+	path = Unity/AGA/Assets/Libs/umoonsharp
+	url = https://github.com/cholushkin/umoonsharp.git
