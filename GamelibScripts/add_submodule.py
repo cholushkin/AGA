@@ -5,6 +5,7 @@ def add_git_submodule(repo_url, submodule_path):
     try:
         subprocess.run(['git', 'submodule', 'add', repo_url, submodule_path], check=True)
         print(f"Submodule added successfully: {submodule_path}")
+        print("Don't forget commit and push")
         
         # Update the submodule after adding
         update_submodule(submodule_path)
