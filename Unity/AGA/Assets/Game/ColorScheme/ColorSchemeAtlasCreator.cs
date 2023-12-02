@@ -40,10 +40,30 @@ namespace GameLib
             string textureName = $"{ColorScheme.name}"; // You can modify this as needed
             string path = Path.Combine(directory, $"{textureName}.png");
 
-            DrawCell(texture, 0, 0, Color.red);
-            DrawCell(texture, 1, 0, Color.green);
-            DrawCell(texture, 2, 0, Color.blue);
-            DrawCell(texture, 3, 0, Color.yellow);
+
+            int row = texture.height / CellSize.y - 1;
+            foreach (var item in ColorScheme.Data)
+            {
+                if (row < 0)
+                {
+                    Debug.LogWarning($"Drawing out of bounds, negative row: {row}");
+                    continue;
+                }
+                // Draw color cells
+                for (int i = 0; i < item.color.Length; ++i)
+                {
+                    if (!DrawCell(texture, i, row, item.color[i]))
+                        Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
+                }
+
+                row--;
+            }
+
+
+            //DrawCell(texture, 0, 0, Color.red);
+            //DrawCell(texture, 1, 0, Color.green);
+            //DrawCell(texture, 2, 0, Color.blue);
+            //DrawCell(texture, 3, 0, Color.yellow);
 
             // Save the texture to the specified path
             byte[] bytes = texture.EncodeToPNG();
@@ -67,32 +87,15 @@ namespace GameLib
         }
 
 
-        // Returns false if the entire rectangle is out of texture bounds
+        // Returns false if the cell is out of texture bounds
         private bool DrawColorRect(Texture2D texture, int x, int y, Color color, int squareWidth, int squareHeight)
         {
-            // Calculate the clipped region to ensure it's within bounds
-            int clippedX = Mathf.Clamp(x, 0, texture.width - 1);
-            int clippedY = Mathf.Clamp(y, 0, texture.height - 1);
-            int clippedWidth = Mathf.Clamp(x + squareWidth, 0, texture.width) - clippedX;
-            int clippedHeight = Mathf.Clamp(y + squareHeight, 0, texture.height) - clippedY;
-
-            // Check if the entire rectangle is out of bounds
-            if (clippedWidth <= 0 || clippedHeight <= 0)
-            {
-                // The entire rectangle is out of bounds
-                return false;
-            }
-
-            for (int i = clippedX; i < clippedX + clippedWidth; i++)
-            {
-                for (int j = clippedY; j < clippedY + clippedHeight; j++)
+            for (int ix = x; ix < Mathf.Min(x + squareWidth, texture.width); ix++)
+                for (int iy = y; iy < Mathf.Min(y + squareHeight, texture.height); iy++)
                 {
-                    texture.SetPixel(i, j, color);
+                    texture.SetPixel(ix, iy, color);
                 }
-            }
-
-            // At least part of the rectangle drawn successfully within bounds
-            return true;
+            return !(x < 0 || y < 0 || x + squareWidth > texture.width || y + squareHeight > texture.height);
         }
 
         private void ClearTexture(Texture2D texture, Color clearColor)
@@ -101,6 +104,43 @@ namespace GameLib
                 for (int y = 0; y < texture.height; y++)
                     texture.SetPixel(x, y, clearColor);
         }
+
+        //Texture2D RenderTextToTexture(Texture2D texture, int x, int y, string text, Color textColor)
+        //{
+        //    int charWidth = 5;
+        //    int charHeight = 5; // Height based on the pixel size and number of rows in the font
+
+        //    text = text.ToUpper();
+        //    int caret = 0;
+        //    int spacing = 1; // Additional space between characters
+
+        //    for (int i = 0; i < text.Length; i++)
+        //    {
+        //        int[,] pixels;
+        //        if (MiniPixelFontDictionary.Chars.TryGetValue(text[i], out pixels))
+        //        {
+        //            for (int cy = 0; cy < pixels.GetLength(0); ++cy)
+        //            {
+        //                for (int cx = 0; cx < pixels.GetLength(1); ++cx)
+        //                {
+        //                    int pixel = pixels[cy, cx];
+        //                    Color color = (pixel == 1) ? textColor : Color.clear;
+        //                    texture.SetPixel(caret + x + cx, y + 5 - cy, color);
+        //                }
+        //            }
+        //            charWidth = pixels.GetLength(1);
+        //            // Add a column of empty pixels
+        //            for (int extraY = 0; extraY < charHeight; ++extraY)
+        //            {
+        //                texture.SetPixel(caret + charWidth + x, y + 5 - extraY, Color.clear);
+        //            }
+
+        //            caret += charWidth + spacing;
+        //        }
+        //    }
+        //    return texture;
+        //}
+
         #endregion
     }
 }

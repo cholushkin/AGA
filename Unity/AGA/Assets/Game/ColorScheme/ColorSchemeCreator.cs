@@ -14,8 +14,27 @@ public class ColorSchemeCreator : ScriptableObject
     public string ColorSchemeName;
     public int ColorCountInARow;
     public bool GenerateBrighten;
+    public bool GenerateLighten;
     public bool GenerateDarken;
+    public float Step;
     public ColorScheme.ColorItem[] InputColors;
+
+    private void Reset()
+    {
+        Debug.Log("Setting default values");
+        OutputDirectory = "Game/ColorScheme/Palletes";
+        ColorSchemeScriptableObjectName = "Basic";
+        ColorSchemeName = "Basic colors";
+        ColorCountInARow = 5;
+        GenerateBrighten = true;
+        GenerateDarken = true;
+        GenerateLighten = true;
+        Step = 0.1f;
+        InputColors = new ColorScheme.ColorItem[3];
+        InputColors[0] = new ColorScheme.ColorItem { color = new UnityEngine.Color[1] { UnityEngine.Color.red }, Name = "Red" };
+        InputColors[1] = new ColorScheme.ColorItem { color = new UnityEngine.Color[1] { UnityEngine.Color.green }, Name = "Green" };
+        InputColors[2] = new ColorScheme.ColorItem { color = new UnityEngine.Color[1] { UnityEngine.Color.blue }, Name = "Blue" };
+    }
 
 
     [Button]
@@ -32,37 +51,58 @@ public class ColorSchemeCreator : ScriptableObject
 
         foreach (var colorItem in InputColors)
         {
-            var rowName = colorItem.Name;
+            var rootName = colorItem.Name;
             var baseColor = colorItem.color[0];
             var tinyColor = new TinyColor(baseColor);
 
-            var colorSchemeItem = new ColorScheme.ColorItem();
-
-            colorSchemeItem.Name = rowName;
-            colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
-            colorSchemeItem.color[0] = baseColor;
-
-            if(GenerateBrighten)
-                for (int i = 1; i < ColorCountInARow; ++i)
-                    colorSchemeItem.color[i] = tinyColor.Brighten(i * 0.1f).ToColor();
-
             
 
-            colorScheme.Data.Add(colorSchemeItem);
+            if (GenerateBrighten)
+            {
+                var colorSchemeItem = new ColorScheme.ColorItem();
+                colorSchemeItem.Name = $"{rootName}Brighten";
+                colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
+                colorSchemeItem.color[0] = baseColor;
+
+                for (int i = 1; i < ColorCountInARow; ++i)
+                    colorSchemeItem.color[i] = tinyColor.Brighten(i * Step).ToColor();
+
+                colorScheme.Data.Add(colorSchemeItem);
+            }
+
+            if(GenerateLighten)
+            {
+                var colorSchemeItem = new ColorScheme.ColorItem();
+                colorSchemeItem.Name = $"{rootName}Lighten";
+                colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
+                colorSchemeItem.color[0] = baseColor;
+
+                for (int i = 1; i < ColorCountInARow; ++i)
+                    colorSchemeItem.color[i] = tinyColor.Lighten(i * Step).ToColor();
+
+                colorScheme.Data.Add(colorSchemeItem);
+            }
+
+            if (GenerateDarken)
+            {
+                var colorSchemeItem = new ColorScheme.ColorItem();
+                colorSchemeItem.Name = $"{rootName}Darken";
+                colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
+                colorSchemeItem.color[0] = baseColor;
+
+                for (int i = 1; i < ColorCountInARow; ++i)
+                    colorSchemeItem.color[i] = tinyColor.Darken(i * Step).ToColor();
+                
+                colorScheme.Data.Add(colorSchemeItem);
+            }
         }
 
-
-
-        //// Set values for the ScriptableObject
-        //myScriptableObject.myData = "Hello, ScriptableObject!";
-        //myScriptableObject.myValue = 42;
-
-        //// Optionally, you can save the ScriptableObject as an asset
+        // Save scriptable object
         string path = $"Assets/{OutputDirectory}/{ColorSchemeScriptableObjectName}.asset";
         UnityEditor.AssetDatabase.CreateAsset(colorScheme, path);
         UnityEditor.AssetDatabase.SaveAssets();
         UnityEditor.AssetDatabase.Refresh();
 
-        Debug.Log("ScriptableObject created and saved at: " + path);
+        Debug.Log("ColorScheme created and saved at: " + path);
     }
 }
