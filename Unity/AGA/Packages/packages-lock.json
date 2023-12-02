@@ -7,6 +7,12 @@
       "dependencies": {},
       "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
     },
+    "com.egg.tinycolor": {
+      "version": "file:C:/Projects/EGG/TinyColor/UnityPort/TinyColor",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.7",
       "depth": 1,

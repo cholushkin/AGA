@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1f10d7380172042a01419bc1b5b9cf, type: 3}
+  m_Name: ColorSchemeAtlasCreator
+  m_EditorClassIdentifier: 
+  ColorScheme: {fileID: 11400000, guid: e20a56d13dbeeeb4daaabf7d229c6875, type: 2}
+  Background: {r: 0.8392157, g: 0.25098044, b: 0.8143621, a: 1}
+  TextureAspects: {x: 122, y: 128}
+  CellSize: {x: 32, y: 32}
+  Layout: 0
