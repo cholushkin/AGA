@@ -1,10 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public static class MiniPixelFontDictionary
+
+namespace GameLib.ColorScheme
 {
-    public static Dictionary<char, int[,]> Chars = new Dictionary<char, int[,]>
+    public static class MiniPixelFontDictionary
+    {
+        public static Dictionary<char, int[,]> Chars = new Dictionary<char, int[,]>
         {
             {'0', new int[,] {
                 {1,1,1,1,1},
@@ -273,4 +274,5 @@ public static class MiniPixelFontDictionary
                 {1, 1, 1, 1, 1}
             }}
         };
+    }
 }

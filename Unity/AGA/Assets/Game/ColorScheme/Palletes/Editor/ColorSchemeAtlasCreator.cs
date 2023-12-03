@@ -1,11 +1,10 @@
 using NaughtyAttributes;
-using NUnit.Framework;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using static TreeEditor.TextureAtlas;
+using UnityEngine.Assertions;
 
-namespace GameLib
+namespace GameLib.ColorScheme
 {
     [CreateAssetMenu(fileName = "ColorSchemeAtlasCreator", menuName = "GameLib/Color/ColorSchemeAtlasCreator", order = 1)]
     public class ColorSchemeAtlasCreator : ScriptableObject
@@ -30,6 +29,9 @@ namespace GameLib
             Assert.IsTrue(TextureAspects.x > 0);
             Assert.IsTrue(TextureAspects.y > 0);
             Texture2D texture = new Texture2D(TextureAspects.x, TextureAspects.y);
+            texture.wrapMode = TextureWrapMode.Clamp;
+            texture.filterMode = FilterMode.Point;
+
             ClearTexture(texture, Background);
 
             // Get the directory of the ColorScheme ScriptableObject
@@ -40,6 +42,8 @@ namespace GameLib
             string textureName = $"{ColorScheme.name}"; // You can modify this as needed
             string path = Path.Combine(directory, $"{textureName}.png");
 
+            if (texture.height % CellSize.y != 0f)
+                Debug.LogWarning("Texture height is not a multiple of cell height");
 
             int row = texture.height / CellSize.y - 1;
             foreach (var item in ColorScheme.Data)
@@ -49,6 +53,7 @@ namespace GameLib
                     Debug.LogWarning($"Drawing out of bounds, negative row: {row}");
                     continue;
                 }
+
                 // Draw color cells
                 for (int i = 0; i < item.color.Length; ++i)
                 {
@@ -56,18 +61,13 @@ namespace GameLib
                         Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
                 }
 
+                RenderTextToTexture(texture, item.color.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
                 row--;
             }
 
-
-            //DrawCell(texture, 0, 0, Color.red);
-            //DrawCell(texture, 1, 0, Color.green);
-            //DrawCell(texture, 2, 0, Color.blue);
-            //DrawCell(texture, 3, 0, Color.yellow);
-
             // Save the texture to the specified path
             byte[] bytes = texture.EncodeToPNG();
-            System.IO.File.WriteAllBytes(path, bytes);
+            File.WriteAllBytes(path, bytes);
 
             AssetDatabase.Refresh();
             ColorScheme.Atlas = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
@@ -76,7 +76,7 @@ namespace GameLib
         }
 
         #region API
-
+        
         private bool DrawCell(Texture2D texture, int cellX, int cellY, Color color)
         {
             // Calculate the pixel coordinates of the top-left corner of the cell
@@ -98,6 +98,7 @@ namespace GameLib
             return !(x < 0 || y < 0 || x + squareWidth > texture.width || y + squareHeight > texture.height);
         }
 
+
         private void ClearTexture(Texture2D texture, Color clearColor)
         {
             for (int x = 0; x < texture.width; x++)
@@ -105,41 +106,43 @@ namespace GameLib
                     texture.SetPixel(x, y, clearColor);
         }
 
-        //Texture2D RenderTextToTexture(Texture2D texture, int x, int y, string text, Color textColor)
-        //{
-        //    int charWidth = 5;
-        //    int charHeight = 5; // Height based on the pixel size and number of rows in the font
 
-        //    text = text.ToUpper();
-        //    int caret = 0;
-        //    int spacing = 1; // Additional space between characters
+        Texture2D RenderTextToTexture(Texture2D texture, int x, int y, string text, Color textColor)
+        {
+            int charWidth = 5;
+            int charHeight = 5; // Height based on the pixel size and number of rows in the font
 
-        //    for (int i = 0; i < text.Length; i++)
-        //    {
-        //        int[,] pixels;
-        //        if (MiniPixelFontDictionary.Chars.TryGetValue(text[i], out pixels))
-        //        {
-        //            for (int cy = 0; cy < pixels.GetLength(0); ++cy)
-        //            {
-        //                for (int cx = 0; cx < pixels.GetLength(1); ++cx)
-        //                {
-        //                    int pixel = pixels[cy, cx];
-        //                    Color color = (pixel == 1) ? textColor : Color.clear;
-        //                    texture.SetPixel(caret + x + cx, y + 5 - cy, color);
-        //                }
-        //            }
-        //            charWidth = pixels.GetLength(1);
-        //            // Add a column of empty pixels
-        //            for (int extraY = 0; extraY < charHeight; ++extraY)
-        //            {
-        //                texture.SetPixel(caret + charWidth + x, y + 5 - extraY, Color.clear);
-        //            }
+            text = text.ToUpper();
+            int caret = 0;
+            int spacing = 1; // Additional space between characters
 
-        //            caret += charWidth + spacing;
-        //        }
-        //    }
-        //    return texture;
-        //}
+            for (int i = 0; i < text.Length; i++)
+            {
+                int[,] pixels;
+                if (MiniPixelFontDictionary.Chars.TryGetValue(text[i], out pixels))
+                {
+                    for (int cy = 0; cy < pixels.GetLength(0); ++cy)
+                    {
+                        for (int cx = 0; cx < pixels.GetLength(1); ++cx)
+                        {
+                            int pixel = pixels[cy, cx];
+                            Color color = (pixel == 1) ? textColor : Background;
+                            texture.SetPixel(caret + x + cx, y + 5 - cy, color);
+                        }
+                    }
+                    charWidth = pixels.GetLength(1);
+
+                    // Add a column of empty pixels
+                    for (int extraY = 0; extraY < charHeight; ++extraY)
+                    {
+                        texture.SetPixel(caret + charWidth + x, y + 5 - extraY, Background);
+                    }
+
+                    caret += charWidth + spacing;
+                }
+            }
+            return texture;
+        }
 
         #endregion
     }

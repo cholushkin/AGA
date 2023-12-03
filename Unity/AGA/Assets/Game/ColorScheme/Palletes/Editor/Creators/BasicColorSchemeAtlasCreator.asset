@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c1f10d7380172042a01419bc1b5b9cf, type: 3}
+  m_Script: {fileID: 11500000, guid: ed235c4a6ef501148969ec6184eafdf9, type: 3}
   m_Name: BasicColorSchemeAtlasCreator
   m_EditorClassIdentifier: 
   ColorScheme: {fileID: 11400000, guid: 8927d50ebbcd63a45b50a94eabb3715a, type: 2}
-  Background: {r: 0.8392157, g: 0.25098044, b: 0.8143621, a: 1}
+  Background: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   TextureAspects: {x: 128, y: 128}
   CellSize: {x: 8, y: 8}
   Layout: 0
