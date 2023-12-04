@@ -42,12 +42,23 @@ namespace GameLib.ColorScheme
         public void CreateColorScheme()
         {
             // Create an instance of the ScriptableObject
-            ColorScheme colorScheme = ScriptableObject.CreateInstance<ColorScheme>();
+            string path = $"Assets/{OutputDirectory}/{ColorSchemeScriptableObjectName}.asset";
+
+            // create all reuse existing
+            var reusedAsset = true;
+            ColorScheme colorScheme = UnityEditor.AssetDatabase.LoadAssetAtPath<ColorScheme>(path);
+            if (colorScheme == null)
+            {
+                Debug.Log($"Creating new asset ColorScheme");
+                colorScheme = ScriptableObject.CreateInstance<ColorScheme>();
+                reusedAsset = false;
+            }
+            else
+                Debug.Log($"Reusing existing asset {path}");
 
 
             colorScheme.Name = ColorSchemeName;
             colorScheme.Data = new List<ColorScheme.ColorItem>();
-
 
 
             foreach (var colorItem in InputColors)
@@ -99,12 +110,12 @@ namespace GameLib.ColorScheme
             }
 
             // Save scriptable object
-            string path = $"Assets/{OutputDirectory}/{ColorSchemeScriptableObjectName}.asset";
-            UnityEditor.AssetDatabase.CreateAsset(colorScheme, path);
+            if(!reusedAsset)
+                UnityEditor.AssetDatabase.CreateAsset(colorScheme, path);
             UnityEditor.AssetDatabase.SaveAssets();
             UnityEditor.AssetDatabase.Refresh();
 
-            Debug.Log("ColorScheme created and saved at: " + path);
+            Debug.Log($"ColorScheme saved at: {path}");
         }
     }
 }

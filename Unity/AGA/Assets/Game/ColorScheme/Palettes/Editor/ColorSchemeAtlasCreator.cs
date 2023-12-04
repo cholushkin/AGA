@@ -26,6 +26,7 @@ namespace GameLib.ColorScheme
         [Button]
         public void GenerateAtlas()
         {
+            Assert.IsNotNull(ColorScheme);
             Assert.IsTrue(TextureAspects.x > 0);
             Assert.IsTrue(TextureAspects.y > 0);
             Texture2D texture = new Texture2D(TextureAspects.x, TextureAspects.y);
