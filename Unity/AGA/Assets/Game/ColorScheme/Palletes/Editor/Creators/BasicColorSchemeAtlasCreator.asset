@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorScheme: {fileID: 11400000, guid: 8927d50ebbcd63a45b50a94eabb3715a, type: 2}
   Background: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
-  TextureAspects: {x: 128, y: 128}
+  TextureAspects: {x: 256, y: 256}
   CellSize: {x: 8, y: 8}
   Layout: 0
