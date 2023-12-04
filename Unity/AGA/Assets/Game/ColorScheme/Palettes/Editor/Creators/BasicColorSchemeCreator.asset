@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79d4f090272cbe44a4c3a13ce9d83e1, type: 3}
   m_Name: BasicColorSchemeCreator
   m_EditorClassIdentifier: 
-  OutputDirectory: Game/ColorScheme/Palletes
+  OutputDirectory: Game/ColorScheme/Palettes
   ColorSchemeScriptableObjectName: Basic
   ColorSchemeName: Basic colors
   ColorCountInARow: 5

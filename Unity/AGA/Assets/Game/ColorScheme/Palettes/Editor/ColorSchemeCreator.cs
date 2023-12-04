@@ -23,7 +23,7 @@ namespace GameLib.ColorScheme
         private void Reset()
         {
             Debug.Log("Setting default values");
-            OutputDirectory = "Game/ColorScheme/Palletes";
+            OutputDirectory = "Game/ColorScheme/Palettes";
             ColorSchemeScriptableObjectName = "Basic";
             ColorSchemeName = "Basic colors";
             ColorCountInARow = 5;

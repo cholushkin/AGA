@@ -15,5 +15,5 @@ MonoBehaviour:
   Sources:
   - ColorSchemeCreatorName: 
     SourceTexture: {fileID: 2800000, guid: 5df3cdd5bbadbac4394984637b7663d2, type: 3}
-  OutputDirectory: Game/ColorScheme/Palletes/Editor/Creators
+  OutputDirectory: Game/ColorScheme/Palettes/Editor/Creators
   ColorsNumber: 5
