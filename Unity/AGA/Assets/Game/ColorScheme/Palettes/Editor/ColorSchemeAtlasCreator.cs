@@ -56,13 +56,13 @@ namespace GameLib.ColorScheme
                 }
 
                 // Draw color cells
-                for (int i = 0; i < item.color.Length; ++i)
+                for (int i = 0; i < item.Palette.Length; ++i)
                 {
-                    if (!DrawCell(texture, i, row, item.color[i]))
+                    if (!DrawCell(texture, i, row, item.Palette[i]))
                         Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
                 }
 
-                RenderTextToTexture(texture, item.color.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
+                RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
                 row--;
             }
 

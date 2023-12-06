@@ -15,18 +15,121 @@ MonoBehaviour:
   OutputDirectory: Game/ColorScheme/Palettes
   ColorSchemeScriptableObjectName: Basic
   ColorSchemeName: Basic colors
-  ColorCountInARow: 5
-  GenerateBrighten: 1
-  GenerateLighten: 1
-  GenerateDarken: 1
-  Step: 0.1
-  InputColors:
-  - Name: Red
-    color:
-    - {r: 1, g: 0, b: 0, a: 1}
-  - Name: Green
-    color:
-    - {r: 0, g: 1, b: 0, a: 1}
-  - Name: Blue
-    color:
-    - {r: 0, g: 0, b: 1, a: 1}
+  InputSource:
+  - Name: Darkenfloralwhite0.2
+    Color: {r: 1, g: 0.8426274, b: 0.5278822, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: Darkenlightcoral0.1
+    Color: {r: 0.9211136, g: 0.33209538, b: 0.3320956, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: Brightendarkgreen0.3
+    Color: {r: 0.28860012, g: 0.680757, b: 0.28860012, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: Brightendodgerblue0.3
+    Color: {r: 0.40534922, g: 0.85240805, b: 1, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: Brightendarkviolet0.1
+    Color: {r: 0.71756303, g: 0.13717087, b: 0.96462184, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: darkslategray
+    Color: {r: 0.18431373, g: 0.30980393, b: 0.30980393, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: slateblue
+    Color: {r: 0.41568628, g: 0.3529412, b: 0.8039216, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: Darkengold0.2
+    Color: {r: 0.5712232, g: 0.4816196, b: 0, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5
+  - Name: darkorange
+    Color: {r: 1, g: 0.54901963, b: 0, a: 1}
+    Step: 0.1
+    GenerateBrighten: 5
+    GenerateLighten: 5
+    GenerateDarken: 5
+    GenerateTint: 5
+    GenerateShade: 5
+    GenerateSaturate: 5
+    GenerateDesaturate: 5
+    GenerateMonochromatic: 5
+    GenerateAnalogous: 5
+    GeneratePolyad: 5

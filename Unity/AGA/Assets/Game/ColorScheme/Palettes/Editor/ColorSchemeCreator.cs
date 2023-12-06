@@ -13,45 +13,49 @@ namespace GameLib.ColorScheme
     [CreateAssetMenu(fileName = "ColorSchemeCreator", menuName = "GameLib/Color/ColorSchemeCreator", order = 1)]
     public class ColorSchemeCreator : ScriptableObject
     {
-	    [Serializable]
-	    public class ColorSource
-	    {
+        [Serializable]
+        public class ColorSource
+        {
             // Set default values. Supposed to be redefined by user manually in the inspector
-		    public ColorSource()
-		    {
-			    Name = null;
+            public ColorSource()
+            {
+                Name = null;               
+                Step = 0.1f;
+                GeneratePolyad = 5;
+            }
 
+            public ColorSource Randomize()
+            {
                 // todo: move to tinycolor package as a random helper
                 var randomColor = TinyColorLib.Color.Colors
-	                .ElementAt(UnityEngine.Random.Range(0, TinyColorLib.Color.Colors.Count)).Value;
+                    .ElementAt(UnityEngine.Random.Range(0, TinyColorLib.Color.Colors.Count)).Value;
                 Name = randomColor.ToName();
                 Assert.IsNotNull(Name);
 
                 float mutation = UnityEngine.Random.Range(0f, 0.4f);
                 if (mutation > 0.05f)
                 {
-	                if (randomColor.IsDark())
-	                {
-		                randomColor = randomColor.Brighten(mutation);
-		                Name = $"Brighten{Name}{mutation:F1}";
-	                }
-	                else
-	                {
-		                randomColor = randomColor.Darken(mutation);
-		                Name = $"Darken{Name}{mutation:F1}";
+                    if (randomColor.IsDark())
+                    {
+                        randomColor = randomColor.Brighten(mutation);
+                        Name = $"Brighten{Name}{mutation:F1}";
+                    }
+                    else
+                    {
+                        randomColor = randomColor.Darken(mutation);
+                        Name = $"Darken{Name}{mutation:F1}";
                     }
                 }
 
                 Color = randomColor.ToColor();
-                Step = 0.1f;
-                GeneratePolyad = 5;
-		    }
+                return this;
+            }
 
-		    public string Name;
-		    public Color Color;
-		    public float Step;
+            public string Name;
+            public Color Color;
+            public float Step;
 
-		    public int GenerateBrighten; // 0 - don't generate, n - generate n grades of brighten colors with the step == Step
+            public int GenerateBrighten; // 0 - don't generate, n - generate n grades of brighten colors with the step == Step
             public int GenerateLighten; // 0 - don't generate, n - generate n grades of lighten colors with the step == Step
             public int GenerateDarken; // 0 - don't generate, n - generate n grades of darken colors with the step == Step
             public int GenerateTint; // 0 - don't generate, n - generate n grades of tint colors with the step == Step
@@ -61,31 +65,31 @@ namespace GameLib.ColorScheme
             public int GenerateMonochromatic; // 0 - don't generate, n - generate n grades of monochromatic colors with the step == Step
             public int GenerateAnalogous; // 0 - don't generate, n - generate n grades of analogous colors with the step == Step
             public int GeneratePolyad; // 0 - don't generate, n - generate n-level polyad (5 will generate pentad)
-	    }
+        }
 
 
         [Tooltip("path to output scriptable object within Assets directory")]
         public string OutputDirectory;
         public string ColorSchemeScriptableObjectName;
         public string ColorSchemeName;
-        
-        public ColorSource[] InputSource;
+
+        public List<ColorSource> InputSource;
 
         private void Reset()
         {
             Debug.Log("Setting default values");
-            Debug.Log("Setting 3 random sources");
 
             OutputDirectory = "Game/ColorScheme/Palettes";
             ColorSchemeScriptableObjectName = "Basic";
             ColorSchemeName = "Basic colors";
 
-            InputSource = new ColorSource[]
-            {
-                new ColorSource(),
-                new ColorSource(),
-                new ColorSource()
-            };
+            InputSource = null;
+        }
+
+        [Button]
+        public void AddRandomColorSource()
+        {
+            InputSource.Add(new ColorSource().Randomize());
         }
 
 
@@ -116,55 +120,148 @@ namespace GameLib.ColorScheme
             {
                 var rootName = source.Name;
                 var baseColor = source.Color;
+                var step = source.Step;
                 var tinyColor = new TinyColor(baseColor);
 
-                Debug.Log(tinyColor.GetColorInfo());
-                
+                Debug.Log(JsonUtility.ToJson(tinyColor.GetColorInfo()));
 
 
+                // BRIGHTEN
+                if (source.GenerateBrighten > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Brighten";
+                    colorSchemeItem.Palette = new Color[source.GenerateBrighten];
 
-                //if (GenerateBrighten)
-                //{
-                //    var colorSchemeItem = new ColorScheme.ColorItem();
-                //    colorSchemeItem.Name = $"{rootName}Brighten";
-                //    colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
-                //    colorSchemeItem.color[0] = baseColor;
+                    for (int i = 0; i < source.GenerateBrighten; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Brighten(i * step).ToColor();
 
-                //    for (int i = 1; i < ColorCountInARow; ++i)
-                //        colorSchemeItem.color[i] = tinyColor.Brighten(i * Step).ToColor();
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
 
-                //    colorScheme.Data.Add(colorSchemeItem);
-                //}
+                // LIGHTEN
+                if (source.GenerateLighten > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Lighten";
+                    colorSchemeItem.Palette = new Color[source.GenerateLighten];
 
-                //if (GenerateLighten)
-                //{
-                //    var colorSchemeItem = new ColorScheme.ColorItem();
-                //    colorSchemeItem.Name = $"{rootName}Lighten";
-                //    colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
-                //    colorSchemeItem.color[0] = baseColor;
+                    for (int i = 0; i < source.GenerateLighten; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Lighten(i * step).ToColor();
 
-                //    for (int i = 1; i < ColorCountInARow; ++i)
-                //        colorSchemeItem.color[i] = tinyColor.Lighten(i * Step).ToColor();
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
 
-                //    colorScheme.Data.Add(colorSchemeItem);
-                //}
+                // DARKEN
+                if (source.GenerateDarken > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Darken";
+                    colorSchemeItem.Palette = new Color[source.GenerateDarken];
 
-                //if (GenerateDarken)
-                //{
-                //    var colorSchemeItem = new ColorScheme.ColorItem();
-                //    colorSchemeItem.Name = $"{rootName}Darken";
-                //    colorSchemeItem.color = new UnityEngine.Color[ColorCountInARow];
-                //    colorSchemeItem.color[0] = baseColor;
+                    for (int i = 0; i < source.GenerateDarken; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Darken(i * step).ToColor();
 
-                //    for (int i = 1; i < ColorCountInARow; ++i)
-                //        colorSchemeItem.color[i] = tinyColor.Darken(i * Step).ToColor();
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
 
-                //    colorScheme.Data.Add(colorSchemeItem);
-                //}
+                // TINT
+                if (source.GenerateTint > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Tint";
+                    colorSchemeItem.Palette = new Color[source.GenerateTint];
+
+                    for (int i = 0; i < source.GenerateTint; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Tint(i * step).ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
+
+                // SHADE
+                if (source.GenerateShade > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Shade";
+                    colorSchemeItem.Palette = new Color[source.GenerateShade];
+
+                    for (int i = 0; i < source.GenerateShade; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Shade(i * step).ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
+
+                // SATURATE
+                if (source.GenerateSaturate > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Saturate";
+                    colorSchemeItem.Palette = new Color[source.GenerateSaturate];
+
+                    for (int i = 0; i < source.GenerateSaturate; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Saturate(i * step).ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
+
+                // DESATURATE
+                if (source.GenerateDesaturate > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Desaturate";
+                    colorSchemeItem.Palette = new Color[source.GenerateDesaturate];
+
+                    for (int i = 0; i < source.GenerateDesaturate; ++i)
+                        colorSchemeItem.Palette[i] = tinyColor.Desaturate(i * step).ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
+
+                // MONOCHROMATIC
+                if (source.GenerateMonochromatic > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Monochromatic";
+                    colorSchemeItem.Palette = new Color[source.GenerateMonochromatic];
+
+                    var mData = tinyColor.Monochromatic(source.GenerateMonochromatic);
+                    for (int i = 0; i < source.GenerateMonochromatic; ++i)
+                        colorSchemeItem.Palette[i] = mData[i].ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
+
+                // ANALOGOUS
+                if (source.GenerateAnalogous > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Analogous";
+                    colorSchemeItem.Palette = new Color[source.GenerateAnalogous];
+
+                    var aData = tinyColor.Analogous(source.GenerateAnalogous);
+                    for (int i = 0; i < source.GenerateAnalogous; ++i)
+                        colorSchemeItem.Palette[i] = aData[i].ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
+
+                // POLYAD
+                if (source.GeneratePolyad > 0)
+                {
+                    var colorSchemeItem = new ColorScheme.ColorItem();
+                    colorSchemeItem.Name = $"{rootName}Polyad";
+                    colorSchemeItem.Palette = new Color[source.GeneratePolyad];
+
+                    var pData = tinyColor.Polyad(source.GeneratePolyad);
+                    for (int i = 0; i < source.GeneratePolyad; ++i)
+                        colorSchemeItem.Palette[i] = pData[i].ToColor();
+
+                    colorScheme.Data.Add(colorSchemeItem);
+                }
             }
 
             // Save scriptable object
-            if(!reusedAsset)
+            if (!reusedAsset)
                 UnityEditor.AssetDatabase.CreateAsset(colorScheme, path);
             UnityEditor.AssetDatabase.SaveAssets();
             UnityEditor.AssetDatabase.Refresh();

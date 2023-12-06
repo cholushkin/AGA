@@ -12,7 +12,7 @@ namespace GameLib.ColorScheme
         public class ColorItem
         {
             public string Name;
-            public Color[] color;
+            public Color[] Palette;
         }
 
         public string Name; // Name of the overall color scheme

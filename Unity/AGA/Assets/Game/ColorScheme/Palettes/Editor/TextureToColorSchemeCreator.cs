@@ -50,7 +50,7 @@ namespace GameLib.ColorScheme
 			List<ColorThief.QuantizedColor> colors = palette.GetPalette(texture, ColorsNumber);
 
 
-			colorSchemeCreator.InputSource = new ColorSchemeCreator.ColorSource[ColorsNumber];
+			colorSchemeCreator.InputSource = new List<ColorSchemeCreator.ColorSource>(ColorsNumber);
 
 			Assert.IsTrue(colors.Count == ColorsNumber);
 
