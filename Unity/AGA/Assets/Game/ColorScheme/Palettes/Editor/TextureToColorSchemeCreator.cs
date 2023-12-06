@@ -43,8 +43,6 @@ namespace GameLib.ColorScheme
 			// Create an instance of the ScriptableObject
 			ColorSchemeCreator colorSchemeCreator = ScriptableObject.CreateInstance<ColorSchemeCreator>();
 
-
-			colorSchemeCreator.ColorCountInARow = 5;
 			colorSchemeCreator.ColorSchemeName = texture.name;
 
 
@@ -52,15 +50,15 @@ namespace GameLib.ColorScheme
 			List<ColorThief.QuantizedColor> colors = palette.GetPalette(texture, ColorsNumber);
 
 
-			colorSchemeCreator.InputColors = new ColorScheme.ColorItem[ColorsNumber];
+			colorSchemeCreator.InputSource = new ColorSchemeCreator.ColorSource[ColorsNumber];
 
 			Assert.IsTrue(colors.Count == ColorsNumber);
 
 			for (int i = 0; i < colors.Count; i++)
 			{
-				colorSchemeCreator.InputColors[i] = new ColorScheme.ColorItem();
-				colorSchemeCreator.InputColors[i].Name = $"Color {i}";
-				colorSchemeCreator.InputColors[i].color = new[] { colors[i].UnityColor};
+				colorSchemeCreator.InputSource[i] = new ColorSchemeCreator.ColorSource();
+				colorSchemeCreator.InputSource[i].Name = $"Color {i}";
+				colorSchemeCreator.InputSource[i].Color = colors[i].UnityColor;
 			}
 
 			string path = $"Assets/{OutputDirectory}/{schemeCreatorName}.asset";
