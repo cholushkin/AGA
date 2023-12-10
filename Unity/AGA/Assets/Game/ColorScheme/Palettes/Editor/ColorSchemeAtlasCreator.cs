@@ -13,8 +13,7 @@ namespace GameLib.ColorScheme
         {
             OneItemPerRow,
             OneItemPerRowWithNames,
-            PackShortItems,
-            PackAll,
+            Columns,
         }
 
         public ColorScheme ColorScheme;
@@ -48,24 +47,65 @@ namespace GameLib.ColorScheme
                 Debug.LogWarning("Texture height is not a multiple of cell height");
 
             int row = texture.height / CellSize.y - 1;
-            foreach (var item in ColorScheme.Data)
+
+            if (Layout == AtlasLayout.OneItemPerRow || Layout == AtlasLayout.OneItemPerRowWithNames)
             {
-                if (row < 0)
+                foreach (var item in ColorScheme.Data)
                 {
-                    Debug.LogWarning($"Drawing out of bounds, negative row: {row}");
-                    continue;
+                    if (row < 0)
+                    {
+                        Debug.LogWarning($"Drawing out of bounds, negative row: {row}");
+                        continue;
+                    }
+
+                    // Draw color cells
+                    for (int i = 0; i < item.Palette.Length; ++i)
+                    {
+                        if (!DrawCell(texture, i, row, item.Palette[i]))
+                            Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
+                    }
+
+                    if (Layout == AtlasLayout.OneItemPerRowWithNames)
+                        RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
+                    row--;
                 }
 
-                // Draw color cells
-                for (int i = 0; i < item.Palette.Length; ++i)
-                {
-                    if (!DrawCell(texture, i, row, item.Palette[i]))
-                        Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
-                }
-
-                RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
-                row--;
             }
+            else if (Layout == AtlasLayout.Columns)
+            {
+                var xOffset = 0;
+                var maxOnCurrentRow = 0;
+                foreach (var item in ColorScheme.Data)
+                {
+                    if (row < 0)
+                    {
+                        Debug.LogWarning($"Drawing out of bounds, negative row: {row}");
+                        continue;
+                    }
+
+                    // Draw color cells
+                    for (int i = 0; i < item.Palette.Length; ++i)
+                    {
+                        if (!DrawCell(texture, xOffset + i, row, item.Palette[i]))
+                            Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
+                    }
+
+                    if (item.Palette.Length > maxOnCurrentRow)
+                        maxOnCurrentRow = item.Palette.Length;
+
+                    if (Layout == AtlasLayout.OneItemPerRowWithNames)
+                        RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
+
+                    row--;
+                    if (row < 0)
+                    {
+                        row = texture.height / CellSize.y - 1;
+                        xOffset += maxOnCurrentRow + 1; // +1  for 1 cell offset between rows
+                        maxOnCurrentRow = 0;
+                    }
+                }
+            }
+
 
             // Save the texture to the specified path
             byte[] bytes = texture.EncodeToPNG();
