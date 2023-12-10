@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79d4f090272cbe44a4c3a13ce9d83e1, type: 3}
+  m_Name: ReferenceColorSchemeCreator
+  m_EditorClassIdentifier: 
+  OutputDirectory: Game/ColorScheme/Palettes
+  ColorSchemeScriptableObjectName: Reference
+  ColorSchemeName: Reference colors
+  InputSource:
+  - Name: Earth
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Step: 0
+    GenerateBrighten: 0
+    GenerateLighten: 0
+    GenerateDarken: 0
+    GenerateTint: 0
+    GenerateShade: 0
+    GenerateSaturate: 0
+    GenerateDesaturate: 0
+    GenerateMonochromatic: 0
+    GenerateAnalogous: 0
+    GeneratePolyad: 0
+  - Name: DryEarth
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Step: 0
+    GenerateBrighten: 0
+    GenerateLighten: 0
+    GenerateDarken: 0
+    GenerateTint: 0
+    GenerateShade: 0
+    GenerateSaturate: 0
+    GenerateDesaturate: 0
+    GenerateMonochromatic: 0
+    GenerateAnalogous: 0
+    GeneratePolyad: 0

@@ -16,4 +16,5 @@ MonoBehaviour:
   Background: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   TextureAspects: {x: 256, y: 256}
   CellSize: {x: 8, y: 8}
+  CellMargin: {x: 1, y: 1}
   Layout: 0

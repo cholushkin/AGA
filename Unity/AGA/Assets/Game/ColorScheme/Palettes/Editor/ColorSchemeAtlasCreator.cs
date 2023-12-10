@@ -21,6 +21,7 @@ namespace GameLib.ColorScheme
         public Color Background;
         public Vector2Int TextureAspects;
         public Vector2Int CellSize;
+        public Vector2Int CellMargin;
         public AtlasLayout Layout;
 
         [Button]
@@ -77,7 +78,7 @@ namespace GameLib.ColorScheme
         }
 
         #region API
-        
+
         private bool DrawCell(Texture2D texture, int cellX, int cellY, Color color)
         {
             // Calculate the pixel coordinates of the top-left corner of the cell
@@ -89,10 +90,11 @@ namespace GameLib.ColorScheme
 
 
         // Returns false if the cell is out of texture bounds
-        private bool DrawColorRect(Texture2D texture, int x, int y, Color color, int squareWidth, int squareHeight)
+        private bool DrawColorRect(Texture2D texture, int x, int y, Color color, int squareWidth, int squareHeight, bool useMargin = true)
         {
-            for (int ix = x; ix < Mathf.Min(x + squareWidth, texture.width); ix++)
-                for (int iy = y; iy < Mathf.Min(y + squareHeight, texture.height); iy++)
+            var margin = useMargin ? 1 : 0;
+            for (int ix = x + margin; ix < Mathf.Min(x + squareWidth - margin, texture.width); ix++)
+                for (int iy = y + margin; iy < Mathf.Min(y + squareHeight - margin, texture.height); iy++)
                 {
                     texture.SetPixel(ix, iy, color);
                 }
