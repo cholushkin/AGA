@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Alg;
 using GameLib;
+using GameLib.Alg;
 using UnityEngine;
 
 namespace Core

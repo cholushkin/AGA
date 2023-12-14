@@ -1,8 +1,8 @@
-using Alg;
+using GameLib.Alg;
 using GameLib.Random;
 using UnityEngine;
 
-namespace Core.LevelSelection
+namespace LevelSelection
 {
     public class TowerGenerator : Singleton<TowerGenerator>
     {

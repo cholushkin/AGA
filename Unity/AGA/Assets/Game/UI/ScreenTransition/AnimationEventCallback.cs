@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using GameLib.UI;
 using UnityEngine;
 
 public class AnimationEventCallback : MonoBehaviour

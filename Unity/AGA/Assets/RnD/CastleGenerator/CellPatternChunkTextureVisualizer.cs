@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CellPatternChunkVisualizer : MonoBehaviour
+public class CellPatternChunkTextureVisualizer : MonoBehaviour
 {
     public RawImage Image;
     public CellPatternChunk Chunk;

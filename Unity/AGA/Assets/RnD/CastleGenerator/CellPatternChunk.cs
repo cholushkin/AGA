@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine.Events;
 using NaughtyAttributes;
 
+[ExecuteInEditMode]
 public class CellPatternChunk : MonoBehaviour
 {
     [Header("Symmetry settings")]
@@ -21,10 +22,12 @@ public class CellPatternChunk : MonoBehaviour
     public Vector2Int ChunkSize;
     public long Seed;
     public bool GenerateOnStart;
+    public bool GenerateOnValidate;
     public UnityEvent OnGenerate;
     BitArray _pattern;
 
     private IPseudoRandomNumberGenerator _rnd;
+    private bool requestRegen;
 
 
     public void Reset()
@@ -39,10 +42,19 @@ public class CellPatternChunk : MonoBehaviour
             Generate();
     }
 
-
     private void OnValidate()
     {
-        Generate();
+        if (GenerateOnValidate)
+            requestRegen = true;
+    }
+
+    void Update()
+    {
+        if (requestRegen)
+        {
+            requestRegen = false;
+            Generate();
+        }
     }
 
 
@@ -72,6 +84,13 @@ public class CellPatternChunk : MonoBehaviour
         while (GetSaturation() < MinSaturation)
             Enable(_rnd.Range(0, ChunkSize.x), _rnd.Range(0, ChunkSize.y));
 
+        OnGenerate?.Invoke();
+    }
+
+    [Button]
+    public void Clear()
+    {
+        _pattern = new BitArray(ChunkSize.x * ChunkSize.y);
         OnGenerate?.Invoke();
     }
 
@@ -176,7 +195,7 @@ public class CellPatternChunk : MonoBehaviour
     public float GetSaturation()
     {
         var num = GetCellsNumber();
-        return num.set / (float) num.all;
+        return num.set / (float)num.all;
     }
 
 
