@@ -1,4 +1,3 @@
-using GameLib.Alg;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -10,6 +9,9 @@ public class CellPatternChunkPrefabVisualizer : MonoBehaviour
     [Button]
     public void Visualize()
     {
+        if(!enabled)
+            return;
+
         var currentVisualization = transform.Find("Visualization");
         if (currentVisualization != null)
         {
@@ -20,14 +22,14 @@ public class CellPatternChunkPrefabVisualizer : MonoBehaviour
 
         var bottomLeft = Chunk.transform.position - new Vector3(Chunk.ChunkSize.x * 0.5f, Chunk.ChunkSize.y * 0.5f, 0);
 
-        for (int row = 0; row < Chunk.ChunkSize.y; row++)
-            for (int col = 0; col < Chunk.ChunkSize.x; col++)
+        for (int y = 0; y < Chunk.ChunkSize.y; y++)
+            for (int x = 0; x < Chunk.ChunkSize.x; x++)
             {
-                if (Chunk.Get(col, row))
+                if (Chunk.Get(x, y))
                 {
                     Instantiate(
                         PrefabCell,
-                        bottomLeft + new Vector3(col + 0.5f, row + 0.5f, 0),
+                        bottomLeft + new Vector3(x + 0.5f, y + 0.5f, 0),
                         Quaternion.identity,
                         currentVisualization);
                 }
