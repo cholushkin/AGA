@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using DlxLib;
-using MoreLinq;
 
 namespace PentominoesLib
 {
@@ -14,74 +12,105 @@ namespace PentominoesLib
             public State()
             {
                 MaybeSolution = null;
-                UniqueBoards = ImmutableList.Create<string>();
+                UniqueBoards = new List<string>();
             }
 
-            public State(ImmutableList<string> uniqueBoards)
+            public State(List<string> uniqueBoards)
             {
                 MaybeSolution = null;
                 UniqueBoards = uniqueBoards;
             }
 
-            public State(ImmutableArray<Placement> solution, ImmutableList<string> uniqueBoards)
+            public State(List<Placement> solution, List<string> uniqueBoards)
             {
                 MaybeSolution = solution;
                 UniqueBoards = uniqueBoards;
             }
 
-            public readonly ImmutableArray<Placement>? MaybeSolution;
-            public readonly ImmutableList<string> UniqueBoards;
+            public readonly List<Placement> MaybeSolution;
+            public readonly List<string> UniqueBoards;
         }
 
-        public static IEnumerable<ImmutableArray<Placement>> Solve()
+
+        public static IEnumerable<List<Placement>> Solve()
         {
-            var rows = BuildRows;
+            var rows = BuildRows();
             var matrix = BuildMatrix(rows);
             var dlx = new Dlx();
             var allSolutions = dlx.Solve(matrix, d => d, r => r);
-            return allSolutions
-                .Select(ResolveSolution(rows))
-                .Scan(
-                    new State(),
-                    (acc, solution) =>
-                        SolutionDeDuplicator.SolutionIsUnique(solution, acc.UniqueBoards)
-                            ? new State(solution, acc.UniqueBoards.Add(FormatBoardOneLine(solution)))
-                            : new State(acc.UniqueBoards.Add(FormatBoardOneLine(solution))))
-                .Where(acc => acc.MaybeSolution.HasValue)
-                .Select(acc => acc.MaybeSolution.Value);
+
+            var result = new List<List<Placement>>();
+            var uniqueBoards = new List<string>();
+
+            foreach (var solution in allSolutions)
+            {
+                var resolvedSolution = ResolveSolution(rows)(solution);
+                var formattedBoard = FormatBoardOneLine(resolvedSolution);
+
+                if (SolutionDeDuplicator.SolutionIsUnique(resolvedSolution, uniqueBoards))
+                {
+                    var state = new State(resolvedSolution, uniqueBoards);
+                    uniqueBoards.Add(formattedBoard);
+                    if (state.MaybeSolution != null)
+                        result.Add(state.MaybeSolution);
+                }
+                else
+                {
+                    uniqueBoards.Add(formattedBoard);
+                }
+            }
+
+            return result;
         }
 
-        public static ImmutableArray<string> FormatSolution(ImmutableArray<Placement> solution)
+        public static List<string> FormatSolution(List<Placement> solution)
         {
-            var seed = ImmutableList.Create<(int x, int y, string label)>(
+            var seed = new List<(int x, int y, string label)>
+            {
                 (3, 3, " "),
                 (3, 4, " "),
                 (4, 3, " "),
                 (4, 4, " ")
-            );
-            var cells = solution.Aggregate(seed, (accOuter, placement) =>
-                placement.Variation.Coords.Aggregate(accOuter, (accInner, coords) =>
+            };
+
+            var cells = new List<(int x, int y, string label)>();
+            foreach (var placement in solution)
+            {
+                foreach (var coords in placement.Variation.Coords)
                 {
                     var x = placement.Location.X + coords.X;
                     var y = placement.Location.Y + coords.Y;
-                    return accInner.Add((x, y, placement.Piece.Label));
-                }));
-            var lines =
-                from y in Enumerable.Range(0, 8)
-                let row = Enumerable.Range(0, 8).Select(x => cells.First(t => t.x == x && t.y == y))
-                select string.Join("", row.Select(t => t.label));
-            return lines.ToImmutableArray();
+                    cells.Add((x, y, placement.Piece.Label));
+                }
+            }
+
+            var lines = new List<string>();
+            for (int y = 0; y < 8; y++)
+            {
+                var row = new List<(int x, string label)>();
+                for (int x = 0; x < 8; x++)
+                {
+                    var cell = cells.First(t => t.x == x && t.y == y);
+                    row.Add((x, cell.label));
+                }
+                lines.Add(string.Join("", row.Select(t => t.label)));
+            }
+
+            return lines;
         }
 
-        private static string FormatBoardOneLine(ImmutableArray<Placement> placements)
+
+        private static string FormatBoardOneLine(List<Placement> placements)
         {
             return string.Join("|", FormatSolution(placements));
         }
 
-        private static Func<ImmutableArray<Placement>, Func<Solution, ImmutableArray<Placement>>> ResolveSolution =
+
+        private static Func<List<Placement>, Func<Solution, List<Placement>>> ResolveSolution =
             rows =>
                 solution =>
-                    solution.RowIndexes.Select(rowIndex => rows[rowIndex]).ToImmutableArray();
+                    solution.RowIndexes.Select(rowIndex => rows[rowIndex]).ToList();
+
 
         private static bool PlacementIsValid(Placement placement)
         {
@@ -95,33 +124,64 @@ namespace PentominoesLib
             return true;
         }
 
-        private static ImmutableArray<Coords> AllLocations =>
-            (
-                from x in Enumerable.Range(0, 8)
-                from y in Enumerable.Range(0, 8)
-                select new Coords(x, y)
-            ).ToImmutableArray();
-
-        private static ImmutableArray<Placement> AllPlacements =>
-            (
-                from piece in Pieces.AllPieces
-                from varation in piece.Variations
-                from location in AllLocations
-                select new Placement(piece, varation, location)
-            ).ToImmutableArray();
-
-        private static ImmutableArray<Placement> BuildRows =>
-            AllPlacements.Where(PlacementIsValid).ToImmutableArray();
-
-        private static ImmutableArray<int> MakePieceColumns(Placement placement)
+        private static List<Coords> AllLocations()
         {
-            var pieceIndex = Pieces.AllPieces.FindIndex(piece => piece.Equals(placement.Piece));
-            return Enumerable.Range(0, Pieces.AllPieces.Count)
-                .Select(index => index == pieceIndex ? 1 : 0)
-                .ToImmutableArray();
+            var locations = new List<Coords>();
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    locations.Add(new Coords(x, y));
+                }
+            }
+            return locations;
         }
 
-        private static ImmutableArray<int> MakeLocationColumns(Placement placement)
+        private static List<Placement> AllPlacements()
+        {
+            var placements = new List<Placement>();
+            foreach (var piece in Pieces.AllPieces())
+            {
+                foreach (var variation in piece.Variations)
+                {
+                    foreach (var location in AllLocations())
+                    {
+                        placements.Add(new Placement(piece, variation, location));
+                    }
+                }
+            }
+            return placements;
+        }
+
+
+        private static List<Placement> BuildRows()
+        {
+            var validPlacements = new List<Placement>();
+            foreach (var placement in AllPlacements())
+            {
+                if (PlacementIsValid(placement))
+                {
+                    validPlacements.Add(placement);
+                }
+            }
+            return validPlacements;
+        }
+
+        private static List<int> MakePieceColumns(Placement placement)
+        {
+            var allPieces = Pieces.AllPieces();
+            var pieceIndex = allPieces.FindIndex(piece => piece.Equals(placement.Piece));
+            var pieceColumns = new List<int>();
+
+            for (int index = 0; index < allPieces.Count; index++)
+            {
+                pieceColumns.Add(index == pieceIndex ? 1 : 0);
+            }
+
+            return pieceColumns;
+        }
+
+        private static List<int> MakeLocationColumns(Placement placement)
         {
             var locationIndices = placement.Variation.Coords.Select(coords =>
             {
@@ -129,20 +189,35 @@ namespace PentominoesLib
                 var y = placement.Location.Y + coords.Y;
                 return y * 8 + x;
             });
+
+            var locationColumns = new List<int>();
             var excludeIndices = new[] { 27, 28, 35, 36 };
-            return Enumerable.Range(0, 64).SelectMany(index =>
-                excludeIndices.Contains(index)
-                    ? Enumerable.Empty<int>()
-                    : Enumerable.Repeat(locationIndices.Contains(index) ? 1 : 0, 1)
-            ).ToImmutableArray();
+
+            for (int index = 0; index < 64; index++)
+            {
+                if (!excludeIndices.Contains(index))
+                {
+                    locationColumns.Add(locationIndices.Contains(index) ? 1 : 0);
+                }
+            }
+
+            return locationColumns;
         }
 
-        private static ImmutableArray<ImmutableArray<int>> BuildMatrix(ImmutableArray<Placement> rows) =>
-            rows.Select(placement =>
+
+        private static List<List<int>> BuildMatrix(List<Placement> rows)
+        {
+            var matrix = new List<List<int>>();
+
+            foreach (var placement in rows)
             {
                 var pieceColumns = MakePieceColumns(placement);
                 var locationColumns = MakeLocationColumns(placement);
-                return pieceColumns.AddRange(locationColumns);
-            }).ToImmutableArray();
+                matrix.Add(new List<int>(pieceColumns.Concat(locationColumns)));
+            }
+
+            return matrix;
+        }
+
     }
 }

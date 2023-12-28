@@ -7,14 +7,20 @@ namespace PentominoesLib
 {
     public static class Pieces
     {
-        public static ImmutableList<Piece> AllPieces =
-            PieceDescriptions.AllPieceDescriptions
-                .Select(MakePiece)
-                .ToImmutableList();
+        public static List<Piece> AllPieces()
+        {
+            var pieces = new List<Piece>();
+            foreach (var pieceDescription in PieceDescriptions.AllPieceDescriptions)
+            {
+                pieces.Add(MakePiece(pieceDescription));
+            }
+            return pieces;
+        }
+
 
         private static Piece MakePiece(PieceDescription pieceDescription)
         {
-            var northPattern = pieceDescription.Pattern;
+            var northPattern = pieceDescription.Pattern.ToList();
             var westPattern = StringManipulations.RotateStrings(northPattern);
             var southPattern = StringManipulations.RotateStrings(westPattern);
             var eastPattern = StringManipulations.RotateStrings(southPattern);
@@ -22,7 +28,9 @@ namespace PentominoesLib
             var westReflectedPattern = StringManipulations.ReflectStrings(westPattern);
             var southReflectedPattern = StringManipulations.ReflectStrings(southPattern);
             var eastReflectedPattern = StringManipulations.ReflectStrings(eastPattern);
-            var allPatternVariations = new[] {
+
+            var allPatternVariations = new List<PatternVariation>
+            {
                 new PatternVariation(Orientation.North, false, northPattern),
                 new PatternVariation(Orientation.West, false, westPattern),
                 new PatternVariation(Orientation.South, false, southPattern),
@@ -32,30 +40,50 @@ namespace PentominoesLib
                 new PatternVariation(Orientation.South, true, southReflectedPattern),
                 new PatternVariation(Orientation.East, true, eastReflectedPattern)
             };
-            var uniquePatternVariations = allPatternVariations.Distinct(new PatternVariationComparer());
+
+            var uniquePatternVariations = new List<PatternVariation>();
+            var comparer = new PatternVariationComparer();
+
+            foreach (var patternVariation in allPatternVariations)
+            {
+                if (!uniquePatternVariations.Any(pv => comparer.Equals(pv, patternVariation)))
+                {
+                    uniquePatternVariations.Add(patternVariation);
+                }
+            }
+
             var uniqueVariations = uniquePatternVariations
-                .Select(upv =>
-                    new Variation(upv.Orientation, upv.Reflected, PatternToCoords(upv.Pattern)))
-                .ToImmutableArray();
+                .Select(upv => new Variation(upv.Orientation, upv.Reflected, PatternToCoords(upv.Pattern)))
+                .ToList();
+
             return new Piece(pieceDescription.Label, uniqueVariations);
         }
 
-        private static ImmutableArray<Coords> PatternToCoords(ImmutableArray<string> pattern)
+
+        private static List<Coords> PatternToCoords(List<string> pattern)
         {
-            var xs = Enumerable.Range(0, pattern[0].Length);
-            var ys = Enumerable.Range(0, pattern.Length);
-            var coords =
-                from x in xs
-                from y in ys
-                where pattern[y][x] == 'X'
-                select new Coords(x, y);
-            return coords.ToImmutableArray();
+            var coords = new List<Coords>();
+            var w = pattern[0].Length;
+            var h = pattern.Count;
+
+            for (int x = 0; x < w; x++)
+            {
+                for (int y = 0; y < h; y++)
+                {
+                    if (pattern[y][x] == 'X')
+                    {
+                        coords.Add(new Coords(x, y));
+                    }
+                }
+            }
+
+            return coords;
         }
     }
 
     class PatternVariation
     {
-        public PatternVariation(Orientation orientation, Boolean reflected, ImmutableArray<string> pattern)
+        public PatternVariation(Orientation orientation, bool reflected, List<string> pattern)
         {
             Orientation = orientation;
             Reflected = reflected;
@@ -63,9 +91,10 @@ namespace PentominoesLib
         }
 
         public readonly Orientation Orientation;
-        public readonly Boolean Reflected;
-        public readonly ImmutableArray<string> Pattern;
+        public readonly bool Reflected;
+        public readonly List<string> Pattern;
     }
+
 
     class PatternVariationComparer : IEqualityComparer<PatternVariation>
     {

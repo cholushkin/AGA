@@ -1,75 +1,87 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 
 namespace PentominoesLib
 {
     public static class PieceDescriptions
     {
-        public static ImmutableArray<PieceDescription> AllPieceDescriptions = ImmutableArray.Create(
-            new PieceDescription("F", ImmutableArray.Create(
+        public static List<PieceDescription> AllPieceDescriptions = new List<PieceDescription>
+        {
+            new PieceDescription("F", new List<string>
+            {
                 " XX",
                 "XX ",
                 " X "
-            )),
-            new PieceDescription("I", ImmutableArray.Create(
+            }),
+            new PieceDescription("I", new List<string>
+            {
                 "X",
                 "X",
                 "X",
                 "X",
                 "X"
-            )),
-            new PieceDescription("L", ImmutableArray.Create(
+            }),
+            new PieceDescription("L", new List<string>
+            {
                 "X ",
                 "X ",
                 "X ",
                 "XX"
-            )),
-            new PieceDescription("P", ImmutableArray.Create(
+            }),
+            new PieceDescription("P", new List<string>
+            {
                 "XX",
                 "XX",
                 "X "
-            )),
-            new PieceDescription("N", ImmutableArray.Create(
+            }),
+            new PieceDescription("N", new List<string>
+            {
                 " X",
                 "XX",
                 "X ",
                 "X "
-            )),
-            new PieceDescription("T", ImmutableArray.Create(
+            }),
+            new PieceDescription("T", new List<string>
+            {
                 "XXX",
                 " X ",
                 " X "
-            )),
-            new PieceDescription("U", ImmutableArray.Create(
+            }),
+            new PieceDescription("U", new List<string>
+            {
                 "X X",
                 "XXX"
-            )),
-            new PieceDescription("V", ImmutableArray.Create(
+            }),
+            new PieceDescription("V", new List<string>
+            {
                 "X  ",
                 "X  ",
                 "XXX"
-            )),
-            new PieceDescription("W", ImmutableArray.Create(
+            }),
+            new PieceDescription("W", new List<string>
+            {
                 "X  ",
                 "XX ",
                 " XX"
-            )),
-            new PieceDescription("X", ImmutableArray.Create(
+            }),
+            new PieceDescription("X", new List<string>
+            {
                 " X ",
                 "XXX",
                 " X "
-            )),
-            new PieceDescription("Y", ImmutableArray.Create(
+            }),
+            new PieceDescription("Y", new List<string>
+            {
                 " X",
                 "XX",
                 " X",
                 " X"
-            )),
-            new PieceDescription("Z", ImmutableArray.Create(
+            }),
+            new PieceDescription("Z", new List<string>
+            {
                 "XX ",
                 " X ",
                 " XX"
-            ))
-        );
+            })
+        };
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 
 namespace PentominoesLib
 {
     public class Variation
     {
-        public Variation(Orientation orientation, bool reflected, ImmutableArray<Coords> coords)
+        public Variation(Orientation orientation, bool reflected, List<Coords> coords)
         {
             Orientation = orientation;
             Reflected = reflected;
@@ -14,6 +14,6 @@ namespace PentominoesLib
 
         public readonly Orientation Orientation;
         public readonly bool Reflected;
-        public readonly ImmutableArray<Coords> Coords;
+        public readonly List<Coords> Coords;
     }
 }

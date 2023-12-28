@@ -1,16 +1,13 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using DlxLib;
+using System.Linq;
 
 namespace PentominoesLib
 {
     public static class SolutionDeDuplicator
     {
         public static bool SolutionIsUnique(
-            ImmutableArray<Placement> placements,
-            ImmutableList<string> uniqueBoards)
+            List<Placement> placements,
+            List<string> uniqueBoards)
         {
             var board1 = Pentominoes.FormatSolution(placements);
             var board2 = StringManipulations.RotateStrings(board1);
@@ -30,7 +27,7 @@ namespace PentominoesLib
                 string.Join("|", board7),
                 string.Join("|", board8)
             };
-            return uniqueBoards.Intersect(boards).Count() == 0;
+            return !boards.Any(uniqueBoards.Contains);
         }
     }
 }
