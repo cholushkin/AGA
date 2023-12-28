@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using PentominoesLib;
+using UnityEngine;
 
 namespace PentominoesApp
 {
     using Solution = List<Placement>;
 
-    class Program
+    class Test : MonoBehaviour
     {
-        static void Main(string[] args)
+        void Awake()
+        {
+            print("asda");    
+            Main();
+        }
+
+        void Main()
         {
             var solutions = Pentominoes.Solve();
             var solutionsCount = solutions.Aggregate(0, (acc, solution) =>
@@ -17,16 +23,16 @@ namespace PentominoesApp
                 DrawSolution(solution);
                 return acc + 1;
             });
-            Console.WriteLine($"Number of solutions found: {solutionsCount}");
+            Debug.Log($"Number of solutions found: {solutionsCount}");
         }
 
-        private static void DrawSolution(Solution solution)
+        private void DrawSolution(Solution solution)
         {
             foreach (var line in Pentominoes.FormatSolution(solution))
             {
-                Console.WriteLine(line);
+                Debug.Log(line);
             }
-            Console.WriteLine(new string('-', 80));
+            Debug.Log(new string('-', 80));
         }
     }
 }
