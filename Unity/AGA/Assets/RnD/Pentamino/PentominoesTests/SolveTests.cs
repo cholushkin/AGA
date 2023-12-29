@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Linq;
 using PentominoesLib;
+using UnityEngine.Assertions;
 
 namespace PentominoesTests
 {
@@ -8,8 +9,8 @@ namespace PentominoesTests
     {
         public void FindsCorrectNumberOfSolutions()
         {
-            var solutions = Pentominoes.Solve();
-            Debug.Assert(65 == solutions.Count());
+            var solutions = Pentominoes.Solve(null);
+            Assert.IsTrue(520 == solutions.Count());
         }
     }
 }

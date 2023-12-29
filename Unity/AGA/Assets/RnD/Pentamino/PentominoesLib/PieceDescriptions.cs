@@ -1,87 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PentominoesLib
 {
     public static class PieceDescriptions
     {
-        public static List<PieceDescription> AllPieceDescriptions = new List<PieceDescription>
-        {
-            new PieceDescription("F", new List<string>
-            {
+        public static IEnumerable<PieceDescription> AllPieceDescriptions = new[] {
+            new PieceDescription("F", new[]{
                 " XX",
                 "XX ",
                 " X "
             }),
-            new PieceDescription("I", new List<string>
-            {
+            new PieceDescription("I", new[]{
                 "X",
                 "X",
                 "X",
                 "X",
                 "X"
             }),
-            new PieceDescription("L", new List<string>
-            {
+            new PieceDescription("L", new[]{
                 "X ",
                 "X ",
                 "X ",
                 "XX"
             }),
-            new PieceDescription("P", new List<string>
-            {
+            new PieceDescription("P", new[]{
                 "XX",
                 "XX",
                 "X "
             }),
-            new PieceDescription("N", new List<string>
-            {
+            new PieceDescription("N", new[]{
                 " X",
                 "XX",
                 "X ",
                 "X "
             }),
-            new PieceDescription("T", new List<string>
-            {
+            new PieceDescription("T", new[]{
                 "XXX",
                 " X ",
                 " X "
             }),
-            new PieceDescription("U", new List<string>
-            {
+            new PieceDescription("U", new[]{
                 "X X",
                 "XXX"
             }),
-            new PieceDescription("V", new List<string>
-            {
+            new PieceDescription("V", new[]{
                 "X  ",
                 "X  ",
                 "XXX"
             }),
-            new PieceDescription("W", new List<string>
-            {
+            new PieceDescription("W", new[]{
                 "X  ",
                 "XX ",
                 " XX"
             }),
-            new PieceDescription("X", new List<string>
-            {
+            new PieceDescription("X", new[]{
                 " X ",
                 "XXX",
                 " X "
             }),
-            new PieceDescription("Y", new List<string>
-            {
+            new PieceDescription("Y", new[]{
                 " X",
                 "XX",
                 " X",
                 " X"
             }),
-            new PieceDescription("Z", new List<string>
-            {
+            new PieceDescription("Z", new[]{
                 "XX ",
                 " X ",
                 " XX"
-            })
+            }),
         };
     }
 }

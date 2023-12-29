@@ -2,7 +2,7 @@
   "dependencies": {
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.dbrizov.naughtyattributes": "https://github.com/cholushkin/NaughtyAttributes.git#upm",
-    "com.egg.tinycolor": "file:C:/Projects/EGG/TinyColor/UnityPort/TinyColor",
+    "com.egg.tinycolor": "https://github.com/cholushkin/TinyColor.git",
     "com.unity.collab-proxy": "2.0.5",
     "com.unity.feature.development": "1.0.2",
     "com.unity.probuilder": "5.1.0",
