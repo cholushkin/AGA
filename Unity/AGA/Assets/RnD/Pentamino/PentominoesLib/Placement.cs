@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PentominoesLib
+﻿namespace PentominoesLib
 {
     public class Placement
     {

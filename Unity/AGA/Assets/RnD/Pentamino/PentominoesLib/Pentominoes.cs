@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using DlxLib;
 
 namespace PentominoesLib
@@ -9,9 +9,9 @@ namespace PentominoesLib
     {
         public static IEnumerable<Solution> Solve(Action<IEnumerable<Placement>, Solution, int> onSolutionFound)
         {
-            var rows = BuildRows;
-            var matrix = BuildMatrix(rows);
-            var dlx = new Dlx();
+            List<Placement> rows = BuildRows();
+            List<List<int>> matrix = BuildMatrix(rows);
+            Dlx dlx = new Dlx();
             dlx.SolutionFound += (_, e) =>
             {
                 if (onSolutionFound != null)
@@ -32,49 +32,102 @@ namespace PentominoesLib
             return true;
         }
 
-        private static IEnumerable<Coords> AllLocations =>
-            from x in Enumerable.Range(0, 8)
-            from y in Enumerable.Range(0, 8)
-            select new Coords(x, y);
+        private static IEnumerable<Coords> AllLocations()
+        {
+            List<Coords> result = new List<Coords>();
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    result.Add(new Coords(x, y));
+                }
+            }
+            return result;
+        }
 
-        private static IEnumerable<Placement> AllPlacements =>
-            from piece in Pieces.AllPieces
-            from varation in piece.Variations
-            from location in AllLocations
-            select new Placement(piece, varation, location);
+        private static List<Placement> AllPlacements()
+        {
+            List<Placement> result = new List<Placement>();
+            foreach (var piece in Pieces.AllPieces)
+            {
+                foreach (var variation in piece.Variations)
+                {
+                    foreach (var location in AllLocations())
+                    {
+                        result.Add(new Placement(piece, variation, location));
+                    }
+                }
+            }
+            return result;
+        }
 
-        private static IEnumerable<Placement> BuildRows =>
-            AllPlacements.Where(PlacementIsValid);
+        private static List<Placement> BuildRows()
+        {
+            List<Placement> result = new List<Placement>();
+            foreach (var placement in AllPlacements())
+            {
+                if (PlacementIsValid(placement))
+                {
+                    result.Add(placement);
+                }
+            }
+            return result;
+        }
 
         private static IEnumerable<int> MakePieceColumns(Placement placement)
         {
-            var piecesList = Pieces.AllPieces.ToList();
-            var pieceIndex = piecesList.FindIndex(piece => piece.Label == placement.Piece.Label);
-            return Enumerable.Range(0, piecesList.Count).Select(index => index == pieceIndex ? 1 : 0);
+            List<Piece> piecesList = Pieces.AllPieces.ToList();
+            int pieceIndex = -1;
+            for (int i = 0; i < piecesList.Count; i++)
+            {
+                if (piecesList[i].Label == placement.Piece.Label)
+                {
+                    pieceIndex = i;
+                    break;
+                }
+            }
+            List<int> result = new List<int>();
+            for (int i = 0; i < piecesList.Count; i++)
+            {
+                result.Add(i == pieceIndex ? 1 : 0);
+            }
+            return result;
         }
 
         private static IEnumerable<int> MakeLocationColumns(Placement placement)
         {
-            var locationIndices = placement.Variation.Coords.Select(coords =>
+            List<int> result = new List<int>();
+            List<int> locationIndices = new List<int>();
+            foreach (var coords in placement.Variation.Coords)
             {
                 var x = placement.Location.X + coords.X;
                 var y = placement.Location.Y + coords.Y;
-                return y * 8 + x;
-            });
-            var excludeIndices = new[] { 27, 28, 35, 36 };
-            return Enumerable.Range(0, 64).SelectMany(index =>
-                excludeIndices.Contains(index)
-                    ? Enumerable.Empty<int>()
-                    : Enumerable.Repeat(locationIndices.Contains(index) ? 1 : 0, 1)
-            );
+                locationIndices.Add(y * 8 + x);
+            }
+
+            int[] excludeIndices = { 27, 28, 35, 36 };
+            for (int index = 0; index < 64; index++)
+            {
+                if (!Array.Exists(excludeIndices, element => element == index))
+                {
+                    result.Add(locationIndices.Contains(index) ? 1 : 0);
+                }
+            }
+
+            return result;
         }
 
-        private static IEnumerable<IEnumerable<int>> BuildMatrix(IEnumerable<Placement> rows) =>
-            rows.Select(placement =>
+        private static List<List<int>> BuildMatrix(IEnumerable<Placement> rows)
+        {
+            List<List<int>> result = new List<List<int>>();
+            foreach (var placement in rows)
             {
-                var pieceColumns = MakePieceColumns(placement);
-                var locationColumns = MakeLocationColumns(placement);
-                return pieceColumns.Concat(locationColumns);
-            });
+                List<int> pieceColumns = new List<int>(MakePieceColumns(placement));
+                List<int> locationColumns = new List<int>(MakeLocationColumns(placement));
+                pieceColumns.AddRange(locationColumns);
+                result.Add(pieceColumns);
+            }
+            return result;
+        }
     }
 }
