@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438343641018487582}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7, y: -19.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7099798159968676916}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1091928498982839248
 GameObject:
@@ -54,7 +54,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091928498982839248}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -65,6 +64,7 @@ Transform:
   - {fileID: 7057079924807442171}
   - {fileID: 5365040271557213598}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1796950541430825532
 GameObject:
@@ -89,13 +89,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796950541430825532}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -13.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5365040271557213598}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2210637369316579200
 GameObject:
@@ -122,7 +122,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2210637369316579200}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7, y: 7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -130,6 +129,7 @@ Transform:
   m_Children:
   - {fileID: 9113116193994925196}
   m_Father: {fileID: 8737986633815819179}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5277227178803380472
 MonoBehaviour:
@@ -143,17 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49ee90355c98c243baf69a432824f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SymmetryVertical: 1
-  SymmetryHorizontal: 1
-  SymmetryDiagonalLeft: 0
-  SymmetryDiagonalRight: 0
-  SymmetryRotationQuad: 0
-  SymmetryRotationHalf: 0
-  MinSaturation: 0.326
-  ChunkSize: {x: 6, y: 3}
-  Seed: 400658
-  GenerateOnStart: 0
-  GenerateOnValidate: 0
   OnGenerate:
     m_PersistentCalls:
       m_Calls:
@@ -169,6 +158,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+  ChunkSize: {x: 8, y: 8}
+  SymmetryVertical: 1
+  SymmetryHorizontal: 1
+  SymmetryDiagonalLeft: 0
+  SymmetryDiagonalRight: 0
+  SymmetryRotationQuad: 0
+  SymmetryRotationHalf: 0
+  MinSaturation: 0.326
+  Seed: 400658
+  GenerateOnStart: 0
+  GenerateOnValidate: 0
 --- !u!114 &7857149893992261497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +208,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4491256782567993160}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -216,6 +215,7 @@ Transform:
   m_Children:
   - {fileID: 7460878048484238880}
   m_Father: {fileID: 8737986633815819179}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3097739030817377208
 MonoBehaviour:
@@ -229,17 +229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49ee90355c98c243baf69a432824f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SymmetryVertical: 1
-  SymmetryHorizontal: 1
-  SymmetryDiagonalLeft: 0
-  SymmetryDiagonalRight: 0
-  SymmetryRotationQuad: 0
-  SymmetryRotationHalf: 0
-  MinSaturation: 0.774
-  ChunkSize: {x: 16, y: 6}
-  Seed: 136782
-  GenerateOnStart: 0
-  GenerateOnValidate: 0
   OnGenerate:
     m_PersistentCalls:
       m_Calls:
@@ -255,6 +244,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+  ChunkSize: {x: 6, y: 8}
+  SymmetryVertical: 1
+  SymmetryHorizontal: 1
+  SymmetryDiagonalLeft: 0
+  SymmetryDiagonalRight: 0
+  SymmetryRotationQuad: 0
+  SymmetryRotationHalf: 0
+  MinSaturation: 0.774
+  Seed: 136782
+  GenerateOnStart: 0
+  GenerateOnValidate: 0
 --- !u!114 &3177048714451655459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,14 +294,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6108757390988195351}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5966023598467988021}
   m_Father: {fileID: 8737986633815819179}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5353166610772580314
 MonoBehaviour:
@@ -315,17 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49ee90355c98c243baf69a432824f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SymmetryVertical: 1
-  SymmetryHorizontal: 1
-  SymmetryDiagonalLeft: 0
-  SymmetryDiagonalRight: 0
-  SymmetryRotationQuad: 0
-  SymmetryRotationHalf: 0
-  MinSaturation: 0.664
-  ChunkSize: {x: 4, y: 8}
-  Seed: 400658
-  GenerateOnStart: 0
-  GenerateOnValidate: 0
   OnGenerate:
     m_PersistentCalls:
       m_Calls:
@@ -341,6 +330,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+  ChunkSize: {x: 3, y: 8}
+  SymmetryVertical: 1
+  SymmetryHorizontal: 1
+  SymmetryDiagonalLeft: 0
+  SymmetryDiagonalRight: 0
+  SymmetryRotationQuad: 0
+  SymmetryRotationHalf: 0
+  MinSaturation: 0.664
+  Seed: 400658
+  GenerateOnStart: 0
+  GenerateOnValidate: 0
 --- !u!114 &1013173832767859022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,13 +378,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6220023022613086672}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7, y: -19.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6622278055593655946}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7882697292511796389
 GameObject:
@@ -395,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7099798159968676916}
-  - component: {fileID: 3446865061865669105}
+  - component: {fileID: 7543852398906651186}
   - component: {fileID: 7403673688607194826}
   m_Layer: 0
   m_Name: Chunk (2)
@@ -411,7 +411,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7882697292511796389}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7, y: 7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -419,8 +418,9 @@ Transform:
   m_Children:
   - {fileID: 6956943026402115604}
   m_Father: {fileID: 8737986633815819179}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3446865061865669105
+--- !u!114 &7543852398906651186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,35 +429,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7882697292511796389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49ee90355c98c243baf69a432824f46, type: 3}
+  m_Script: {fileID: 11500000, guid: 80d808b4d59994c4fb7e5242d9c3bd5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SymmetryVertical: 1
-  SymmetryHorizontal: 1
-  SymmetryDiagonalLeft: 0
-  SymmetryDiagonalRight: 0
-  SymmetryRotationQuad: 0
-  SymmetryRotationHalf: 0
-  MinSaturation: 0.326
-  ChunkSize: {x: 6, y: 3}
-  Seed: 400658
-  GenerateOnStart: 0
-  GenerateOnValidate: 0
   OnGenerate:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7403673688607194826}
-        m_TargetAssemblyTypeName: CellPatternChunkPrefabVisualizer, Assembly-CSharp
-        m_MethodName: Visualize
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
+  ChunkSize: {x: 8, y: 8}
+  Original: {fileID: 5277227178803380472}
+  Mirror: 0
 --- !u!114 &7403673688607194826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabCell: {fileID: 3907003841899792630, guid: 77426512179f62747a6b91e01bacb812, type: 3}
-  Chunk: {fileID: 3446865061865669105}
+  Chunk: {fileID: 7543852398906651186}
 --- !u!1 &8359609021175136921
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,11 +475,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8359609021175136921}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -20.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7057079924807442171}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

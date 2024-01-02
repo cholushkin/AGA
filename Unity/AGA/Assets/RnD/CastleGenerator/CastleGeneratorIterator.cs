@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameLib.Alg;
+using GameLib.Random;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace CastleGenerator
         public Transform CellPatternParent;
 
         public long Seed;
-
+        private IPseudoRandomNumberGenerator _rnd;
 
         public async void Awake()
         {
@@ -33,7 +34,9 @@ namespace CastleGenerator
         [Button()]
         public async UniTask Generate()
         {
-            Debug.Log($"Generating castle");
+	        _rnd = RandomHelper.CreateRandomNumberGenerator(Seed);
+	        Seed = (int)_rnd.GetState().AsNumber();
+            Debug.Log($"Generating castle {Seed}");
             var iteration = 0;
             bool finishGeneration = false;
 
@@ -61,7 +64,7 @@ namespace CastleGenerator
                 CellPatternParent.DestroyChildren();
                 await UniTask.DelayFrame(1);
 
-                var prefab = CellPatterns[Random.Range(0, CellPatterns.Length)];
+                var prefab = _rnd.FromArray(CellPatterns);
                 Instantiate(prefab, CellPatternParent);
                 await UniTask.DelayFrame(1);
             }
@@ -69,7 +72,7 @@ namespace CastleGenerator
             // Generate cell pattern
             {
                 // Mutate parameters
-                CellGenerator.MutateParameters();
+                CellGenerator.MutateParameters(_rnd);
 
 
                 CellGenerator.Generate();
@@ -83,9 +86,10 @@ namespace CastleGenerator
             CellGeneratorValidator.Validate();
             if (CellGeneratorValidator.Status != CellGeneratorValidator.ValidateStatus.Pass)
             {
-                Debug.Log($"Iteration {iteration}: CellGeneratorValidator failed - {CellGeneratorValidator.Status}");
+                Debug.Log($"FAIL iteration {iteration}");
                 return false;
             }
+            Debug.Log($"Success on iteration {iteration}");
 
             return true;
         }

@@ -10,20 +10,24 @@ namespace CastleGenerator
 {
 
     [ExecuteInEditMode]
-    public class CellPatternChunkClone : MonoBehaviour
+    public class CellPatternChunkClone : CellPatternChunkBase
     {
         public CellPatternChunk Original;
         public bool Mirror;
-        
 
-        public void DoCloning()
+        public override void Generate()
         {
-            //var bitArray = Original.GetBitArray();
-            //foreach (var VARIABLE in )
-            //{
-                
-            //}
-            
+	        OnGenerate?.Invoke();
+        }
+
+        public override void Set(int col, int row, bool value)
+        {
+	        throw new System.NotImplementedException();
+        }
+
+        public override bool Get(int col, int row)
+        {
+	        return Original.Get(col, row);
         }
     }
 }

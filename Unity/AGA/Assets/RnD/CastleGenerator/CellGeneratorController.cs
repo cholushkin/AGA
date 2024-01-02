@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections.Generic;
 using System.Linq;
+using GameLib.Random;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -50,7 +51,7 @@ namespace CastleGenerator
 
             foreach (var cloneChunk in _cloneChunks)
             {
-                cloneChunk.DoCloning();
+                cloneChunk.Generate();
             }
 
             var data = Merge(bounds, rects);
@@ -142,12 +143,12 @@ namespace CastleGenerator
             Gizmos.DrawWireCube(Bounds.center, Bounds.size);
         }
 
-        public void MutateParameters()
+        public void MutateParameters(IPseudoRandomNumberGenerator rnd)
         {
             var chunks = GetChunksInChildren();
             foreach (var cellPatternChunk in chunks)
             {
-                cellPatternChunk.Seed = (long) (long.MaxValue * Random.value);
+                cellPatternChunk.Seed = rnd.ValueInt();
             }
         }
     }

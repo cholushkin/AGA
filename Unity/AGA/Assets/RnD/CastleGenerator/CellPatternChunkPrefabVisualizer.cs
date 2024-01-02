@@ -6,7 +6,7 @@ namespace CastleGenerator
     public class CellPatternChunkPrefabVisualizer : MonoBehaviour
     {
         public GameObject PrefabCell;
-        public CellPatternChunk Chunk;
+        public CellPatternChunkBase Chunk;
 
         [Button]
         public void Visualize()
