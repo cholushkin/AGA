@@ -10,7 +10,7 @@ namespace CastleGenerator
 {
 
     [ExecuteInEditMode]
-    public class CellPatternChunk : MonoBehaviour
+    public class CellPatternChunk : CellPatternChunkBase
     {
         [Header("Symmetry settings")] public bool SymmetryVertical;
         public bool SymmetryHorizontal;
@@ -22,11 +22,11 @@ namespace CastleGenerator
         [Tooltip("Ratio of enabled cells to total cells")] [Range(0f, 1f)]
         public float MinSaturation;
 
-        public Vector2Int ChunkSize;
+        
         public long Seed;
         public bool GenerateOnStart;
         public bool GenerateOnValidate;
-        public UnityEvent OnGenerate;
+        
         BitArray _pattern;
         private IPseudoRandomNumberGenerator _rnd;
         private bool requestRegen;
@@ -80,7 +80,7 @@ namespace CastleGenerator
 
 
         [Button]
-        public void Generate()
+        public override void Generate()
         {
             _rnd = RandomHelper.CreateRandomNumberGenerator(Seed);
             Seed = (int) _rnd.GetState().AsNumber();
@@ -123,7 +123,7 @@ namespace CastleGenerator
 
 
         // Set the value of a pixel at a given position
-        public void Set(int col, int row, bool value)
+        public override void Set(int col, int row, bool value) 
         {
             int index = (col + row * ChunkSize.x);
             if (col < 0 || row < 0)
@@ -135,7 +135,7 @@ namespace CastleGenerator
             _pattern[index] = value;
         }
 
-        public bool Get(int col, int row)
+        public override bool Get(int col, int row)
         {
             return _pattern[col + row * ChunkSize.x];
         }
