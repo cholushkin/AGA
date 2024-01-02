@@ -26,14 +26,15 @@ namespace CastleGenerator
         public long Seed;
         public bool GenerateOnStart;
         public bool GenerateOnValidate;
+
+        public Vector2Int ChunkSize;
+        public UnityEvent OnGenerate;
+
         
-        BitArray _pattern;
         private IPseudoRandomNumberGenerator _rnd;
         private bool requestRegen;
 
         
-        public BitArray GetBitArray() => _pattern;
-
 
         public void Reset()
         {
@@ -79,12 +80,17 @@ namespace CastleGenerator
         }
 
 
+        public override Vector2Int GetChunkSize()
+        {
+            return ChunkSize;
+        }
+
         [Button]
         public override void Generate()
         {
             _rnd = RandomHelper.CreateRandomNumberGenerator(Seed);
             Seed = (int) _rnd.GetState().AsNumber();
-            _pattern = new BitArray(ChunkSize.x * ChunkSize.y);
+            _pattern = new byte[ChunkSize.x, ChunkSize.y];
 
             while (GetSaturation() < MinSaturation)
                 Enable(_rnd.Range(0, ChunkSize.x), _rnd.Range(0, ChunkSize.y));
@@ -95,7 +101,7 @@ namespace CastleGenerator
         [Button]
         public void Clear()
         {
-            _pattern = new BitArray(ChunkSize.x * ChunkSize.y);
+            _pattern = new byte[ChunkSize.x, ChunkSize.y];
             OnGenerate?.Invoke();
         }
 
@@ -103,7 +109,7 @@ namespace CastleGenerator
         // Enable cells in the pattern based on symmetry settings
         public void Enable(int col, int row)
         {
-            RotSet(col, row, true);
+            RotSet(col, row, 1);
 
             int halfX = (int) Mathf.Floor(ChunkSize.x / 2.0f);
             int halfY = (int) Mathf.Floor(ChunkSize.y / 2.0f);
@@ -114,35 +120,19 @@ namespace CastleGenerator
             int mRow = -(row - halfY) + halfY - (oddSizeY ? 0 : 1);
 
             if (SymmetryVertical)
-                RotSet(mCol, row, true);
+                RotSet(mCol, row, 1);
             if (SymmetryHorizontal)
-                RotSet(col, mRow, true);
+                RotSet(col, mRow, 1);
             if (SymmetryVertical && SymmetryHorizontal)
-                RotSet(mCol, mRow, true);
+                RotSet(mCol, mRow, 1);
         }
 
 
-        // Set the value of a pixel at a given position
-        public override void Set(int col, int row, bool value) 
-        {
-            int index = (col + row * ChunkSize.x);
-            if (col < 0 || row < 0)
-                return;
-            if (col >= ChunkSize.x)
-                return;
-            if (row >= ChunkSize.y)
-                return;
-            _pattern[index] = value;
-        }
-
-        public override bool Get(int col, int row)
-        {
-            return _pattern[col + row * ChunkSize.x];
-        }
+      
 
 
         // Set the value of pixels in a diagonal pattern
-        private void DiagSet(int col, int row, bool value)
+        private void DiagSet(int col, int row, byte value)
         {
             int halfX = ChunkSize.x / 2;
             int halfY = ChunkSize.y / 2;
@@ -163,7 +153,7 @@ namespace CastleGenerator
 
 
         // Set the value of pixels in a rotated pattern
-        private void RotSet(int col, int row, bool value)
+        private void RotSet(int col, int row, byte value)
         {
             DiagSet(col, row, value);
 
@@ -206,7 +196,7 @@ namespace CastleGenerator
 
         public (int all, int set) GetCellsNumber()
         {
-            return (ChunkSize.x * ChunkSize.y, _pattern.Cast<bool>().Count(bit => bit));
+            return (ChunkSize.x * ChunkSize.y, _pattern.Cast<byte>().Count(value => value > 0));
         }
     }
 }

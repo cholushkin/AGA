@@ -17,8 +17,7 @@ namespace CastleGenerator
         public byte[,] Data { get; private set; }
 
         public UnityEvent OnGenerate;
-        private List<CellPatternChunk> _chunks;
-        private List<CellPatternChunkClone> _cloneChunks;
+        private List<CellPatternChunkBase> _chunks;
         public Bounds Bounds { get; private set; }
         public List<Rect> Rects { get; private set; }
         public ResultStatus Status;
@@ -29,7 +28,7 @@ namespace CastleGenerator
             Debug.Log("CellGeneratorController.Generate");
             Status = ResultStatus.Success;
             _chunks = GetChunksInChildren();
-            _cloneChunks = GetCloneChunksInChildren();
+            _chunks = _chunks.OrderBy(chunk => chunk is CellPatternChunkClone).ToList();
 
             if (_chunks.Count < 1)
             {
@@ -46,13 +45,10 @@ namespace CastleGenerator
             var rects = GetChunkRects(bounds);
             Rects = rects;
 
-            foreach (CellPatternChunk chunk in _chunks)
+            foreach (CellPatternChunkBase chunk in _chunks)
                 chunk.Generate();
 
-            foreach (var cloneChunk in _cloneChunks)
-            {
-                cloneChunk.Generate();
-            }
+ 
 
             var data = Merge(bounds, rects);
 
@@ -66,13 +62,13 @@ namespace CastleGenerator
         private List<Rect> GetChunkRects(Bounds bounds)
         {
             var chunkRects = new List<Rect>(_chunks.Count);
-            foreach (CellPatternChunk chunk in _chunks)
+            foreach (CellPatternChunkBase chunk in _chunks)
             {
                 var curChunkOffset = chunk.transform.position - bounds.min;
-                var chunkOffsetX = Mathf.RoundToInt(curChunkOffset.x - chunk.ChunkSize.x * 0.5f);
-                var chunkOffsetY = Mathf.RoundToInt(curChunkOffset.y - chunk.ChunkSize.y * 0.5f);
+                var chunkOffsetX = Mathf.RoundToInt(curChunkOffset.x - chunk.GetChunkSize().x * 0.5f);
+                var chunkOffsetY = Mathf.RoundToInt(curChunkOffset.y - chunk.GetChunkSize().y * 0.5f);
 
-                chunkRects.Add(new Rect(chunkOffsetX, chunkOffsetY, chunk.ChunkSize.x, chunk.ChunkSize.y));
+                chunkRects.Add(new Rect(chunkOffsetX, chunkOffsetY, chunk.GetChunkSize().x, chunk.GetChunkSize().y));
             }
 
             return chunkRects;
@@ -83,18 +79,18 @@ namespace CastleGenerator
             byte[,] data = new byte[(int)bounds.size.x, (int)bounds.size.y];
             int i = 0;
 
-            foreach (CellPatternChunk chunk in _chunks)
+            foreach (CellPatternChunkBase chunk in _chunks)
             {
                 var rect = rects[i++];
 
-                for (int x = 0; x < chunk.ChunkSize.x; ++x)
-                    for (int y = 0; y < chunk.ChunkSize.y; ++y)
-                        data[(int)(rect.xMin + x), (int)rect.yMin + y] = (byte)(chunk.Get(x, y) ? 1 : 0);
+                for (int x = 0; x < chunk.GetChunkSize().x; ++x)
+                    for (int y = 0; y < chunk.GetChunkSize().y; ++y)
+                        data[(int)(rect.xMin + x), (int)rect.yMin + y] = (chunk.Get(x, y));
             }
             return data;
         }
 
-        private Bounds GetAABB(List<CellPatternChunk> chunks)
+        private Bounds GetAABB(List<CellPatternChunkBase> chunks)
         {
             var bounds = new Bounds();
             float minx = float.MaxValue;
@@ -102,10 +98,10 @@ namespace CastleGenerator
             float maxx = float.MinValue;
             float maxy = float.MinValue;
 
-            foreach (CellPatternChunk chunk in chunks)
+            foreach (CellPatternChunkBase chunk in chunks)
             {
-                var width = chunk.ChunkSize.x;
-                var height = chunk.ChunkSize.y;
+                var width = chunk.GetChunkSize().x;
+                var height = chunk.GetChunkSize().y;
                 minx = Mathf.Min(minx, chunk.transform.position.x - width * 0.5f);
                 miny = Mathf.Min(miny, chunk.transform.position.y - height * 0.5f);
                 maxx = Mathf.Max(maxx, chunk.transform.position.x + width * 0.5f);
@@ -119,19 +115,13 @@ namespace CastleGenerator
             return bounds;
         }
 
-        private List<CellPatternChunk> GetChunksInChildren()
+        private List<CellPatternChunkBase> GetChunksInChildren()
         {
-            _chunks = transform.GetComponentsInChildren<CellPatternChunk>().ToList();
+            _chunks = transform.GetComponentsInChildren<CellPatternChunkBase>().ToList();
             Debug.Log($"Found {_chunks.Count} chunks");
             return _chunks;
         }
 
-        private List<CellPatternChunkClone> GetCloneChunksInChildren()
-        {
-            _cloneChunks = transform.GetComponentsInChildren<CellPatternChunkClone>().ToList();
-            Debug.Log($"Found {_cloneChunks.Count} cloneChunks");
-            return _cloneChunks;
-        }
 
         void OnDrawGizmos()
         {
@@ -148,7 +138,9 @@ namespace CastleGenerator
             var chunks = GetChunksInChildren();
             foreach (var cellPatternChunk in chunks)
             {
-                cellPatternChunk.Seed = rnd.ValueInt();
+                var cBase = cellPatternChunk as CellPatternChunk;
+                if (cBase)
+                    cBase.Seed = rnd.ValueInt();
             }
         }
     }

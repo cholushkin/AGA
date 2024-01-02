@@ -27,7 +27,7 @@ namespace CastleGenerator
 
             for (int row = 0; row < texture.height; row++)
             for (int col = 0; col < texture.width; col++)
-                colors[row * texture.width + col] = Chunk.Get(col, row) ? Color.black : Color.white;
+                colors[row * texture.width + col] = Chunk.Get(col, row) == 1 ? Color.black : Color.white;
 
             texture.SetPixels(colors);
             texture.Apply();
