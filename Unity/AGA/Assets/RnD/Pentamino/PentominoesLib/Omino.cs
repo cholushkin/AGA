@@ -1,43 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using DlxLib;
 
 namespace PentominoesLib
 {
-    public static class Pentominoes
+    public class Omino
     {
-        public static IEnumerable<Solution> Solve(Action<IEnumerable<Placement>, Solution, int> onSolutionFound)
+        private int _solutionCounter;
+        public IEnumerable<Solution> Solve(Action<IEnumerable<Placement>, Solution, int> onSolutionFound, int maxSolutions)
         {
+            var cancellationTokenSource = new CancellationTokenSource();
             List<Placement> rows = BuildRows();
             List<List<int>> matrix = BuildMatrix(rows);
-            Dlx dlx = new Dlx();
+            Dlx dlx = new Dlx(cancellationTokenSource.Token);
             dlx.SolutionFound += (_, e) =>
             {
                 if (onSolutionFound != null)
                     onSolutionFound(rows, e.Solution, e.SolutionIndex);
+                _solutionCounter++;
+                if (_solutionCounter >= maxSolutions)
+                    cancellationTokenSource.Cancel();
+
             };
             return dlx.Solve(matrix, d => d, r => r);
         }
 
-        private static bool PlacementIsValid(Placement placement)
+        private bool PlacementIsValid(Placement placement)
         {
             foreach (var coords in placement.Variation.Coords)
             {
                 var x = placement.Location.X + coords.X;
                 var y = placement.Location.Y + coords.Y;
-                if (x >= 8 || y >= 8) return false;
-                if ((x == 3 || x == 4) && (y == 3 || y == 4)) return false;
+                if (x >= 64 || y >= 64) return false;
             }
             return true;
         }
 
-        private static IEnumerable<Coords> AllLocations()
+        private IEnumerable<Coords> AllLocations()
         {
             List<Coords> result = new List<Coords>();
-            for (int x = 0; x < 8; x++)
+            for (int x = 0; x < 64; x++)
             {
-                for (int y = 0; y < 8; y++)
+                for (int y = 0; y < 64; y++)
                 {
                     result.Add(new Coords(x, y));
                 }
@@ -45,7 +51,7 @@ namespace PentominoesLib
             return result;
         }
 
-        private static List<Placement> AllPlacements()
+        private List<Placement> AllPlacements()
         {
             List<Placement> result = new List<Placement>();
             foreach (var piece in Pieces.AllPieces)
@@ -61,7 +67,7 @@ namespace PentominoesLib
             return result;
         }
 
-        private static List<Placement> BuildRows()
+        private List<Placement> BuildRows()
         {
             List<Placement> result = new List<Placement>();
             foreach (var placement in AllPlacements())
@@ -74,7 +80,7 @@ namespace PentominoesLib
             return result;
         }
 
-        private static IEnumerable<int> MakePieceColumns(Placement placement)
+        private IEnumerable<int> MakePieceColumns(Placement placement)
         {
             List<Piece> piecesList = Pieces.AllPieces.ToList();
             int pieceIndex = -1;
@@ -94,7 +100,7 @@ namespace PentominoesLib
             return result;
         }
 
-        private static IEnumerable<int> MakeLocationColumns(Placement placement)
+        private IEnumerable<int> MakeLocationColumns(Placement placement)
         {
             List<int> result = new List<int>();
             List<int> locationIndices = new List<int>();
@@ -105,19 +111,19 @@ namespace PentominoesLib
                 locationIndices.Add(y * 8 + x);
             }
 
-            int[] excludeIndices = { 27, 28, 35, 36 };
+            //int[] excludeIndices = { 27, 28, 35, 36 };
             for (int index = 0; index < 64; index++)
             {
-                if (!Array.Exists(excludeIndices, element => element == index))
-                {
+              //  if (!Array.Exists(excludeIndices, element => element == index))
+                //{
                     result.Add(locationIndices.Contains(index) ? 1 : 0);
-                }
+                //}
             }
 
             return result;
         }
 
-        private static List<List<int>> BuildMatrix(IEnumerable<Placement> rows)
+        private List<List<int>> BuildMatrix(IEnumerable<Placement> rows)
         {
             List<List<int>> result = new List<List<int>>();
             foreach (var placement in rows)

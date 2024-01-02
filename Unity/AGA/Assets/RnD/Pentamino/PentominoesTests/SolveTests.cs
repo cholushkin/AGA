@@ -9,7 +9,7 @@ namespace PentominoesTests
     {
         public void FindsCorrectNumberOfSolutions()
         {
-            var solutions = Pentominoes.Solve(null);
+            var solutions = new Omino().Solve(null, 1);
             Assert.IsTrue(520 == solutions.Count());
         }
     }

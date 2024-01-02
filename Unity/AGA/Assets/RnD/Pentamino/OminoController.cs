@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using PentominoesLib;
 using DlxLib;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace PentominoesApp
@@ -14,13 +15,13 @@ namespace PentominoesApp
 
 	    void Awake()
 	    {
-		    FindSolutions();
 	    }
 
+        [Button]
         void FindSolutions()
         {
-	        var omino = new Omino{MaxSolutions = MaxSolutions };
-            var solutions = omino.Solve(OnSolutionFound);
+            var omino = new Omino();
+            var solutions = omino.Solve(OnSolutionFound, MaxSolutions);
             Debug.Log($"Total number of solutions found: {solutions.Count()}");
             Debug.Log($"Number of unique solutions found: {UniqueSolutions.Count()}");
         }
