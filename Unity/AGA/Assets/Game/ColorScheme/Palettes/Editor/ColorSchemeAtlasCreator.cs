@@ -75,6 +75,7 @@ namespace GameLib.ColorScheme
             {
                 var xOffset = 0;
                 var maxOnCurrentRow = 0;
+                var index = 0;
                 foreach (var item in ColorScheme.Data)
                 {
                     if (row < 0)
@@ -89,6 +90,8 @@ namespace GameLib.ColorScheme
                         if (!DrawCell(texture, xOffset + i, row, item.Palette[i]))
                             Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
                     }
+
+                    Debug.Log($"{index++}." + item.Name);
 
                     if (item.Palette.Length > maxOnCurrentRow)
                         maxOnCurrentRow = item.Palette.Length;
