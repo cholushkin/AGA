@@ -127,7 +127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4671039241189460652}
   m_Layer: 0
-  m_Name: CellPattern
+  m_Name: CellPattern00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

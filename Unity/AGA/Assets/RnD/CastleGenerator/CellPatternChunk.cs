@@ -1,14 +1,12 @@
 using UnityEngine;
 using System.Linq;
 using GameLib.Random;
-using System.Collections;
 using UnityEngine.Events;
 using NaughtyAttributes;
 
 
 namespace CastleGenerator
 {
-
     [ExecuteInEditMode]
     public class CellPatternChunk : CellPatternChunkBase
     {

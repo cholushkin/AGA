@@ -19,7 +19,7 @@ namespace CastleGenerator
         public UnityEvent OnGenerate;
         private List<CellPatternChunkBase> _chunks;
         public Bounds Bounds { get; private set; }
-        public List<Rect> Rects { get; private set; }
+        public List<Rect> Rects { get; private set; }   
         public ResultStatus Status;
 
         [Button]

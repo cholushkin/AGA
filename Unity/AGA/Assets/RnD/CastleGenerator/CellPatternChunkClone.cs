@@ -30,8 +30,8 @@ namespace CastleGenerator
 
         private byte[,] MirrorArrayUpDown(byte[,] original)
         {
-            int rows = original.GetLength(0);
-            int cols = original.GetLength(1);
+            int rows = original.GetLength(0); // y
+            int cols = original.GetLength(1); // x
             byte[,] mirroredArray = new byte[rows, cols];
             for (int i = 0; i < rows; i++)
                 for (int j = 0; j < cols; j++)
