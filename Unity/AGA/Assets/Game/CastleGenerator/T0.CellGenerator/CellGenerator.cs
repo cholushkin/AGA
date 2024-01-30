@@ -37,8 +37,10 @@ namespace CastleGenerator.Tier0
                 chunk.Generate();
             
             Data = Merge(cellPattern.Bounds, cellPattern.Rects, cellPattern);
-            new FloodFill().Fill(Data, cellPattern.BasementRect, cellPattern.Rects);
-            Status = ResultStatus.Success;
+            var floodFill = new FloodFill();
+            floodFill.Fill(Data, cellPattern.BasementRect, cellPattern.Rects);
+            Status = floodFill.FloodFillStatus == FloodFill.Status.Pass ? 
+                ResultStatus.Success : ResultStatus.Failed;
 
             return Data;
         }

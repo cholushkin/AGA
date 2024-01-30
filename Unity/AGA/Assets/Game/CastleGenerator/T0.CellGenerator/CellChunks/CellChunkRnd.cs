@@ -131,62 +131,16 @@ namespace CastleGenerator.Tier0
             }
         }
 
-
         public float GetSaturation()
         {
             var num = GetCellsNumber();
             return num.set / (float) num.all;
         }
 
-
         public (int all, int set) GetCellsNumber()
         {
             var chunkSize = GetSize();
             return (chunkSize.width * chunkSize.height, _data.Cast<byte>().Count(value => value > 0));
-        }
-        
-        void OnDrawGizmos()
-        {
-            // Assuming your script is attached to a game object, get the position
-            Vector3 position = transform.position;
-
-            // Calculate the half extents of the AABB
-            Vector3 halfExtents = new Vector3(Width, Height, 1) * 0.5f;
-
-            // Draw the AABB wire cube
-            Gizmos.color = Color.magenta; // You can choose a different color
-            Gizmos.DrawWireCube(position, halfExtents * 2f);
-            
-            // Draw cells
-            Vector3 startBottomLeft = position - halfExtents + Vector3.one * 0.5f;
-            
-            for (int y = 0; y < Height; y++)
-                for (int x = 0; x < Width; x++)
-                {
-                    // Calculate the position for each WireCube 
-                    Vector3 cubePosition = startBottomLeft + new Vector3(x, y, 0);
-
-                    // Draw the WireCube at the calculated position
-                    Gizmos.color = Color.white;
-                    Gizmos.DrawWireCube(cubePosition, new Vector3(1f, 1f, 0.1f)); // You can adjust the size of the WireCube as needed
-
-                    // Draw the cell data
-                    if (_data != null)
-                    {
-                        if (_data[x, y] == 1)
-                        {
-                            Gizmos.color = Color.white;
-                            Gizmos.DrawCube(cubePosition,
-                                new Vector3(0.8f, 0.8f, 0.1f)); // You can adjust the size of the WireCube as needed
-                        }
-                        else if (_data[x, y] == 2)
-                        {
-                            Gizmos.color = Color.blue;
-                            Gizmos.DrawCube(cubePosition,
-                                new Vector3(0.8f, 0.8f, 0.1f)); // You can adjust the size of the WireCube as needed
-                        }
-                    }
-                }
         }
     }
 }

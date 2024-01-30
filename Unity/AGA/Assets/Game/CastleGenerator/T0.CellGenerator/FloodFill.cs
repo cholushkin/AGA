@@ -23,27 +23,30 @@ namespace CastleGenerator.Tier0
         
         public void Fill(byte[,] data, Rect basementRect, List<Rect> chunkRects)
         {
+            Debug.Log("FloodFill.Fill");
             FloodFillStatus = Status.Processing;
             _chunkRects = chunkRects;
             FilledCounter = 0;
 
             var basement = GetBasement(data, basementRect);
 
-            // if (basement.index != -1 && basement.length >= 2)
-            // {
-            //     Fill(Controller.Data, basement.entranceIndex, 0, 2);
-            // }
-            // else
-            // {
-            //     Status = ValidateStatus.FailBadBasement;
-            // }
-            //
-            // if (_visitedRects.Count != Controller.Rects.Count)
-            //     Status = ValidateStatus.FailReachAllChunks;
-            //
-            // Debug.Log($"Visited rects {_visitedRects.Count}");
-            //
-            // OnValidate?.Invoke();
+            if (basement.index != -1 && basement.length >= 2)
+            {
+                Fill(data, basement.entranceIndex, 0, 2);
+            }
+            else
+            {
+                FloodFillStatus = Status.FailBadBasement;
+                return;
+            }
+
+            if (_visitedRects.Count != _chunkRects.Count)
+            {
+                FloodFillStatus = Status.FailReachAllChunks;
+                return;
+            }
+
+            FloodFillStatus = Status.Pass;
         }
 
         private void Fill(byte[,] data, int startx, int starty, byte value)
@@ -55,29 +58,17 @@ namespace CastleGenerator.Tier0
 
                 List<(int, int)> result = new List<(int, int)>();
 
-                // Add left neighbor
-                if (x - 1 >= 0)
-                {
+                if (x - 1 >= 0) // Add left neighbor
                     result.Add((x - 1, y));
-                }
-
-                // Add top neighbor
-                if (y - 1 >= 0)
-                {
+                
+                if (y - 1 >= 0) // Add top neighbor
                     result.Add((x, y - 1));
-                }
 
-                // Add right neighbor
-                if (x + 1 < rows)
-                {
+                if (x + 1 < rows) // Add right neighbor
                     result.Add((x + 1, y));
-                }
 
-                // Add bottom neighbor
-                if (y + 1 < cols)
-                {
+                if (y + 1 < cols) // Add bottom neighbor
                     result.Add((x, y + 1));
-                }
 
                 return result;
             }
@@ -92,13 +83,11 @@ namespace CastleGenerator.Tier0
                     FilledCounter++;
 
                     foreach (var rect in _chunkRects)
-                    {
                         if (rect.Contains(new Vector2(x, y)))
                         {
                             _visitedRects.Add(rect);
                             break;
                         }
-                    }
                     
 
                     // Get the neighbors
@@ -106,9 +95,7 @@ namespace CastleGenerator.Tier0
 
                     // Recursively fill the connected neighbors
                     foreach (var neighbour in neighbours)
-                    {
                         FillConnected(neighbour.Item1, neighbour.Item2);
-                    }
                 }
             }
 

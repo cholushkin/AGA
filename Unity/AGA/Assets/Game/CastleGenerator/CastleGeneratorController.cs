@@ -16,8 +16,7 @@ public class CastleGeneratorController : MonoBehaviour
     public int MaxPickIteration; 
     public Transform CellPatternOutput;
     public bool VisualizeTier0;
-    public long SeedPatternProvider;
-    public long SeedCellGenerator;
+    public long SeedTier0;
 
 
     [Header("Castle")] public LogChecker Log;
@@ -32,7 +31,7 @@ public class CastleGeneratorController : MonoBehaviour
         int cellPatternIteration = 0;
         int fillIteration = 0;
 
-        CellPatternProvider.Init(SeedPatternProvider); // Propagate seed
+        CellPatternProvider.Init(SeedTier0); // Propagate seed
         
         while (!finishGeneration && cellPatternIteration < MaxPickIteration)
         {
@@ -41,7 +40,7 @@ public class CastleGeneratorController : MonoBehaviour
             await UniTask.Yield();
             var cellPattern = Instantiate(CellPatternProvider.GetRandom(), CellPatternOutput);
             //await UniTask.Yield();
-            cellPattern.Init(SeedCellGenerator); // Propagate seed
+            cellPattern.Init(CellPatternProvider); // Propagate seed
             fillIteration = 0;
 
             do
@@ -49,8 +48,9 @@ public class CastleGeneratorController : MonoBehaviour
                 Debug.Log($"Tier 0. Fill attempt iteration {fillIteration}.");
                 await CellGenerator.Generate(cellPattern);
                 if (VisualizeTier0)
-                    await CellGeneratorVisualizer.Visualize(CellGenerator);
+                    await CellGeneratorVisualizer.Visualize(CellGenerator, cellPattern.Bounds);
 
+                Debug.Log($"Cell generator status: {CellGenerator.Status}.");
                 ++fillIteration;
             } while (CellGenerator.Status != CellGeneratorController.ResultStatus.Success &&
                      fillIteration < MaxFillIteration);
