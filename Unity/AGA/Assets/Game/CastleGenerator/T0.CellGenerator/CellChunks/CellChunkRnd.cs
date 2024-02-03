@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameLib.Random;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.PlayerLoop;
 
 namespace CastleGenerator.Tier0
@@ -12,7 +13,6 @@ namespace CastleGenerator.Tier0
     {
         [Tooltip("Ratio of enabled cells to total cells")] [Range(0f, 1f)]
         public float MinSaturation;
-        public long Seed;
         public CellChunkRndParamMutator Mutator;
         private IPseudoRandomNumberGenerator _rnd;
         
@@ -23,21 +23,9 @@ namespace CastleGenerator.Tier0
         public bool SymmetryRotationQuad;
         public bool SymmetryRotationHalf;
 
-        
-        private void Awake()
+        public void SetRnd(IPseudoRandomNumberGenerator rnd)
         {
-            Init();
-        }
-
-        private void Init()
-        {
-            SetSeed(Seed);
-        }
-
-        public void SetSeed(long seed)
-        {
-            _rnd = RandomHelper.CreateRandomNumberGenerator(seed);
-            Seed = (int) _rnd.GetState().AsNumber();
+            _rnd = rnd;
         }
 
         public override void Generate()

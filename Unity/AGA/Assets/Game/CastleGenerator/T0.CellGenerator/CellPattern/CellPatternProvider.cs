@@ -1,3 +1,4 @@
+using GameLib.Log;
 using GameLib.Random;
 using UnityEngine;
 
@@ -8,34 +9,26 @@ namespace CastleGenerator.Tier0
     // todo: Provider variant which populate from specified resource folder and generation parameter
     public class CellPatternProvider : MonoBehaviour
     {
-        public long Seed;
         public CellPattern[] CellPatternsPool;
-
         private IPseudoRandomNumberGenerator _rnd;
+        private LogChecker _log;
         
-        public void Init(long seed)
+        public void Init(IPseudoRandomNumberGenerator rnd, LogChecker log)
         {
-            Debug.Log("CellPatternProvider Init", transform);
-            
-            SetSeed(seed);
+            _log = log;
+            _rnd = rnd;
+            _log.Print(LogChecker.Level.Normal, "CellPatternProvider.Init", transform);
             Populate();
         }
         
         void Populate()
         {
-            Debug.Log($"CellPatternProvider uses static array of patterns CellPatternsPool. {CellPatternsPool.Length} items.");
+            _log.Print(LogChecker.Level.Verbose, $"CellPatternProvider uses static array of patterns CellPatternsPool. {CellPatternsPool.Length} items.");
         }
 
         public CellPattern GetRandom()
         {
             return _rnd.FromArray(CellPatternsPool);
-        }
-
-        public void SetSeed(long seed)
-        {
-            _rnd = RandomHelper.CreateRandomNumberGenerator(seed);
-            Seed = (int) _rnd.GetState().AsNumber();
-            Debug.Log($"CellPatternProvider set seed: {Seed}", transform);
         }
     }
 }

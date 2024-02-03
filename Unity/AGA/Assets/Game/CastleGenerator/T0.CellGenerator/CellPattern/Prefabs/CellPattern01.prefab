@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: CellPattern01
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1091928498982839248}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -75,7 +75,7 @@ Transform:
   m_GameObject: {fileID: 2210637369316579200}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7, y: 7, z: 0}
+  m_LocalPosition: {x: -7, y: 8.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,8 +98,8 @@ MonoBehaviour:
       m_Calls: []
   Width: 5
   Height: 5
+  OptionalVisit: 0
   MinSaturation: 0.276
-  Seed: -1
   Mutator: {fileID: 0}
   SymmetryVertical: 0
   SymmetryHorizontal: 0
@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 4491256782567993160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -156,8 +156,8 @@ MonoBehaviour:
       m_Calls: []
   Width: 9
   Height: 9
+  OptionalVisit: 0
   MinSaturation: 0.745
-  Seed: -1
   Mutator: {fileID: 0}
   SymmetryVertical: 1
   SymmetryHorizontal: 1
@@ -191,7 +191,7 @@ Transform:
   m_GameObject: {fileID: 6108757390988195351}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 12.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -214,8 +214,8 @@ MonoBehaviour:
       m_Calls: []
   Width: 5
   Height: 7
+  OptionalVisit: 0
   MinSaturation: 0.636
-  Seed: -1
   Mutator: {fileID: 0}
   SymmetryVertical: 1
   SymmetryHorizontal: 1
@@ -249,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 7882697292511796389}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 7, z: 0}
+  m_LocalPosition: {x: 7, y: 8.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -272,5 +272,6 @@ MonoBehaviour:
       m_Calls: []
   Width: 5
   Height: 5
+  OptionalVisit: 0
   Original: {fileID: 7272373158874557017}
   MirrorType: 1

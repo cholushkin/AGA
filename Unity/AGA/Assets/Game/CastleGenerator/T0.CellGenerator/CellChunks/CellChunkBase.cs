@@ -22,6 +22,7 @@ namespace CastleGenerator.Tier0
         public UnityEvent OnGenerate;
         public int Width;
         public int Height;
+        public bool OptionalVisit;
         
         public (int width, int height) GetSize()
         {
@@ -66,7 +67,9 @@ namespace CastleGenerator.Tier0
             Gizmos.DrawWireCube(position, halfExtents * 2f);
             
             // Draw cells
-            Gizmos.color = Color.yellow; // You can choose a different color
+            var clr = Color.yellow;
+            clr.a = 0.4f;
+            Gizmos.color = clr; // You can choose a different color
             Vector3 startBottomLeft = position - halfExtents + Vector3.one * 0.5f;
             
             for (int y = 0; y < Height; y++)

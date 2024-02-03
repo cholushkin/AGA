@@ -20,7 +20,7 @@ namespace CastleGenerator
 
         public override void Generate()
         {
-            Assert.IsNotNull(_data, "CellChunkClone.Generate must be called after Original CellChunkBase" );
+            Assert.IsNotNull(Original.GetData(), "CellChunkClone.Generate must be called after Original CellChunkBase" );
             _data = MirrorType switch
             {
                 Mirror.Vertical => MirrorArrayLeftToRight(Original.GetData()),
