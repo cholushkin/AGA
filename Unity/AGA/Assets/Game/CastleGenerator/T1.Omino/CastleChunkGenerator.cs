@@ -32,9 +32,9 @@ namespace CastleGenerator.Tier1
         {
             // Initialization step
             _availableCells = GetAvailableCells();
-            _normProbs = GetPercentageOfAllPieces();
-            _normProbsCurrent = (float[]) _normProbs.Clone();
-            _pieceTypeSpawnedCounter = new int[PieceDescriptions.AllPieceDescriptions.Length];
+            // _normProbs = GetPercentageOfAllPieces();
+            // _normProbsCurrent = (float[]) _normProbs.Clone();
+            // _pieceTypeSpawnedCounter = new int[PieceDescriptions.AllPieceDescriptions.Length];
             var initialEmptyCellCount = _availableCells.Count;
 
             _log.Print(LogChecker.Level.Normal, "[method]CastleChunkGenerator.Generate");
@@ -55,16 +55,16 @@ namespace CastleGenerator.Tier1
             return res;
         }
 
-        private float[] GetPercentageOfAllPieces()
-        {
-            float[] probsNorm = new float[PieceDescriptions.AllPieceDescriptions.Count()];
-            float sum = PieceDescriptions.AllPieceDescriptions.Sum(allPieceDescription =>
-                allPieceDescription.Probability);
-            int i = 0;
-            foreach (var dsc in PieceDescriptions.AllPieceDescriptions)
-                probsNorm[i++] = dsc.Probability / sum;
-            return probsNorm;
-        }
+        // private float[] GetPercentageOfAllPieces()
+        // {
+        //     float[] probsNorm = new float[PieceDescriptions.AllPieceDescriptions.Count()];
+        //     float sum = PieceDescriptions.AllPieceDescriptions.Sum(allPieceDescription =>
+        //         allPieceDescription.Probability);
+        //     int i = 0;
+        //     foreach (var dsc in PieceDescriptions.AllPieceDescriptions)
+        //         probsNorm[i++] = dsc.Probability / sum;
+        //     return probsNorm;
+        // }
 
         private bool IsEmptyCell(int x, int y)
         {

@@ -110,7 +110,8 @@ namespace CastleGenerator
         [Button()]
         public async UniTask Tier1Task()
         {
-            CastleChunkGenerator.Init(CellGenerator, LogT1);
+            var pieceDescriptions = new PieceDescriptions(CastleChunkProvider.Metas);
+            CastleChunkGenerator.Init(CellGenerator,pieceDescriptions, LogT1);
             await CastleChunkGenerator.Generate();
         }
 

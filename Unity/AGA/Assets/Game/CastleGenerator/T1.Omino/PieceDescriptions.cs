@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using TowerGenerator;
 using UnityEngine;
 
 namespace CastleGenerator.Tier1
@@ -9,15 +10,14 @@ namespace CastleGenerator.Tier1
     {
         public class PieceDescription
         {
-            public readonly string Label;
             public readonly float Probability;
             public List<Vector2Int> Coords;
             public readonly int ID;
+            public int Instances; // ammount of instances of current shape (including mirror variants)
 
             public PieceDescription(int id, string label, float probability, IEnumerable<string> pattern)
             {
                 ID = id;
-                Label = label;
                 Probability = probability;
                 Coords = CreateCoordinates(pattern);
             }
@@ -39,6 +39,15 @@ namespace CastleGenerator.Tier1
                     y--; // Move up one row
                 }
                 return coords;
+            }
+        }
+
+        private const byte StartingID = 4; // all prev values could be used for different purposes in data ( 0 - empty, 1 - gen fill, 2 - flood fill ) 
+        
+        public PieceDescriptions(List<MetaBase> metas)
+        {
+            foreach (var meta in metas)
+            {
             }
         }
 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741369d3a04597340a175cc533e9341c, type: 3}
   m_Name: CastleChunks
   m_EditorClassIdentifier: 
-  FbxNameStartFrom: P
+  FbxInputPath:
+  - Assets\Game\CastleGenerator\T1.Omino\FBX\CastleChunks
   EnableMetaGeneration: 1
   IsPack: 0
   EnableImport: 1
@@ -20,5 +21,5 @@ MonoBehaviour:
   AddColliders: 0
   ApplyMaterials: 0
   Scale: 1
-  _metasOutputPath: Assets/Game/CastleGenerator/Prefabs
-  _chunksOutputPath: Assets/Game/CastleGenerator/Prefabs
+  _metasOutputPath: Assets/Game/CastleGenerator/T1.Omino/CastleChunk/Resources/PrefabsCastleChunks
+  _chunksOutputPath: Assets/Game/CastleGenerator/T1.Omino/CastleChunk/Resources/PrefabsCastleChunks
