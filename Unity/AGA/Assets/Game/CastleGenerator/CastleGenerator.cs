@@ -1,5 +1,6 @@
 using CastleGenerator.Tier0;
 using CastleGenerator.Tier1;
+using CastleGenerator.Tier2;
 using Cysharp.Threading.Tasks;
 using GameLib.Alg;
 using GameLib.Log;
@@ -11,16 +12,20 @@ using UnityEngine;
 
 namespace CastleGenerator
 {
-    public class CastleGeneratorController : MonoBehaviour
+    public class CastleGenerator : MonoBehaviour
     {
         [Header("Castle")]
         // =============================================
         public bool GenerateOnStart;
+        
+        public const byte Val0 = 0; // empty and not used
+        public const byte Val1 = 1; // initial cell generation patterns
+        public const byte Val2 = 2; // flood filled value| available for polyomino spawn
+        public const byte Val3 = 3; // polyomino placed
 
         [Header("Tier 0")]
         // =============================================
         public CellGeneratorController CellGenerator;
-
         public CellPatternProvider CellPatternProvider;
         public CellGeneratorVisualizer CellGeneratorVisualizer;
         public int MaxFillIteration; // How many iterations to take before change to the next CellPattern
@@ -36,13 +41,22 @@ namespace CastleGenerator
 
         [Header("Tier 1")]
         // =============================================
-        public MetaProvider CastleChunkProvider;
-
-        public CastleChunkGenerator CastleChunkGenerator;
+        public CastleChunkMetaProvider CastleChunkProvider;
+        public CastlePolyominoGenerator CastlePolyominoGenerator;
         public long SeedTier1;
         public LogChecker LogT1;
 
         private IPseudoRandomNumberGenerator _rndTier1;
+        private PolyominoProvider _polyominoProvider;
+
+        [Header("Tier 2")]
+        // =============================================
+        public CastleChunkGenerator ChunkGenerator;
+        public long SeedTier2;
+        public LogChecker LogT2;
+        private IPseudoRandomNumberGenerator _rndTier2;
+        
+        
 
         async void Start()
         {
@@ -53,11 +67,13 @@ namespace CastleGenerator
             }
         }
 
-        [Button()]
+        [Button("Tier 0 + 1 + 2")]
         public async UniTask GenerateCastle()
         {
             LogT0.Print(LogChecker.Level.Normal, $">>>>> [method]CastleGeneratorController.GenerateCastle");
             await Tier0Task();
+            await Tier1Task();
+            await Tier2Task();
         }
 
 
@@ -110,9 +126,22 @@ namespace CastleGenerator
         [Button()]
         public async UniTask Tier1Task()
         {
-            var pieceDescriptions = new PieceDescriptions(CastleChunkProvider.Metas);
-            CastleChunkGenerator.Init(CellGenerator,pieceDescriptions, LogT1);
-            await CastleChunkGenerator.Generate();
+            (_rndTier1, SeedTier1) = SetTierSeed(SeedTier1);
+            LogT1.Print(LogChecker.Level.Normal, $"T1 Seed: {SeedTier1}");
+            
+            CastleChunkProvider.Init();
+             _polyominoProvider = new PolyominoProvider(CastleChunkProvider.Metas);
+            CastlePolyominoGenerator.Init(CellGenerator, _polyominoProvider, _rndTier1, LogT1);
+            await CastlePolyominoGenerator.Generate();
+        }
+        
+        [Button()]
+        public async UniTask Tier2Task()
+        {
+            (_rndTier2, SeedTier2) = SetTierSeed(SeedTier2);
+            LogT2.Print(LogChecker.Level.Normal, $"T2 Seed: {SeedTier2}");
+            ChunkGenerator.Init(_polyominoProvider, CastlePolyominoGenerator, _rndTier2, LogT2);
+            await ChunkGenerator.Generate();
         }
 
         private (IPseudoRandomNumberGenerator, long) SetTierSeed(long seed)
@@ -121,10 +150,6 @@ namespace CastleGenerator
             var newSeed = rnd.GetState().AsNumber();
             return (rnd, newSeed);
         }
-
-
-
-
 
         void OnDrawGizmos()
         {

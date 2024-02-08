@@ -12,7 +12,7 @@ namespace CastleGenerator.Tier1.Editor
     {
         static RegisterCastleChunkMetaCreator()
         {
-            MetaTypeRegistry.RegisterMetaType(new MetaTypeRegistry.MetaTypeEntry {Name = "CastleChunkMeta", Creator = new CastleChunkMetaCreator()});
+            MetaTypeRegistry.RegisterMetaType(new MetaTypeRegistry.MetaTypeEntry {Name = "MetaCastleChunk", Creator = new CastleChunkMetaCreator()});
         }
     }
     
@@ -22,7 +22,7 @@ namespace CastleGenerator.Tier1.Editor
         {
             var chunkController = chunkObject.GetComponent<ChunkControllerBase>();
             Assert.IsNotNull(chunkController, "chunk must have a ChunkControllerBase");
-            string assetPathAndName = importSource.MetasOutputPath + "/" + importState.ChunkName + ".castlemeta.asset";
+            string assetPathAndName = importSource.MetasOutputPath + "/" + importState.ChunkName + ".metacastle.asset";
             var metaAsset = AssetDatabase.LoadAssetAtPath<CastleChunkMeta>(assetPathAndName); // Try to load existing asset first to keep references to the asset alive
             var isCreated = false;
             if (metaAsset == null)

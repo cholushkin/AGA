@@ -45,7 +45,7 @@ namespace CastleGenerator.Tier0
                     // Calculate the position for each WireCube 
                     Vector3 cubePosition = startBottomLeft + new Vector3(x + 0.5f, y + 0.5f, 0);
 
-                    if (data[x, y] == 1)
+                    if (data[x, y] == CastleGenerator.Val1)
                     {
                         var clr = Color.gray;
                         clr.a = 0.6f;
@@ -53,9 +53,15 @@ namespace CastleGenerator.Tier0
                         Gizmos.DrawCube(cubePosition,
                             new Vector3(0.8f, 0.8f, 0.2f)); // You can adjust the size of the WireCube as needed
                     }
-                    else if (data[x, y] == 2)
+                    else if (data[x, y] == CastleGenerator.Val2)
                     {
                         Gizmos.color = Color.white;
+                        Gizmos.DrawCube(cubePosition,
+                            new Vector3(0.8f, 0.8f, 0.2f)); // You can adjust the size of the WireCube as needed
+                    }
+                    else if (data[x, y] == CastleGenerator.Val3)
+                    {
+                        Gizmos.color = Color.yellow;
                         Gizmos.DrawCube(cubePosition,
                             new Vector3(0.8f, 0.8f, 0.2f)); // You can adjust the size of the WireCube as needed
                     }

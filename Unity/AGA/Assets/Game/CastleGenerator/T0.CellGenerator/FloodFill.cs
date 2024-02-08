@@ -19,10 +19,6 @@ namespace CastleGenerator.Tier0
         public Status FloodFillStatus;
         public int FilledCounter { get; private set; }
 
-        private const byte Val0 = 0;
-        private const byte Val1 = 1; 
-        private const byte Val2 = 2;
-
 
         public void Fill(byte[,] data, Rect basementRect, List<Rect> obligatoryRects, bool removeDiagonals)
         {
@@ -33,7 +29,7 @@ namespace CastleGenerator.Tier0
 
             if (basement.index != -1 && basement.length >= 2)
             {
-                Fill(data, basement.entranceIndex, 0, Val2);
+                Fill(data, basement.entranceIndex, 0, CastleGenerator.Val2);
                 if (removeDiagonals)
                     RemoveDiagonals(data);
             }
@@ -49,7 +45,7 @@ namespace CastleGenerator.Tier0
                 {
                     for (int y = (int) rect.yMin; y < rect.yMin + rect.height; ++y)
                     for (int x = (int) rect.xMin; x < rect.xMin + rect.width; ++x)
-                        if (data[x, y] == Val2)
+                        if (data[x, y] == CastleGenerator.Val2)
                             return true;
                     return false; // If not found, continue with the rest of the code
                 }
@@ -75,19 +71,19 @@ namespace CastleGenerator.Tier0
             for (int y = 0; y < height; ++y)
             for (int x = 0; x < width; ++x)
             {
-                if(data[x,y] != Val2)
+                if(data[x,y] != CastleGenerator.Val2)
                     continue;
                 if (x - 1 >= 0 && y - 1 >= 0)
                 {
                     var leftDiag = data[x - 1, y - 1];
-                    if (leftDiag == Val2 && data[x, y - 1] != Val2 && data[x - 1, y] != Val2)
-                        data[x, y - 1] = Val2;
+                    if (leftDiag == CastleGenerator.Val2 && data[x, y - 1] != CastleGenerator.Val2 && data[x - 1, y] != CastleGenerator.Val2)
+                        data[x, y - 1] = CastleGenerator.Val2;
                 }
                 if (x + 1 < width && y - 1 >= 0 )
                 {
                     var rightDiag = data[x + 1, y - 1];
-                    if (rightDiag == Val2 && data[x, y - 1] != Val2 && data[x + 1, y] != Val2)
-                        data[x, y - 1] = Val2;
+                    if (rightDiag == CastleGenerator.Val2 && data[x, y - 1] != CastleGenerator.Val2 && data[x + 1, y] != CastleGenerator.Val2)
+                        data[x, y - 1] = CastleGenerator.Val2;
                 }
             }
         }
@@ -119,7 +115,7 @@ namespace CastleGenerator.Tier0
             void FillConnected(int x, int y)
             {
                 // Check if the current element is within bounds and has the value 1
-                if (x >= 0 && x < data.GetLength(0) && y >= 0 && y < data.GetLength(1) && data[x, y] == Val1)
+                if (x >= 0 && x < data.GetLength(0) && y >= 0 && y < data.GetLength(1) && data[x, y] == CastleGenerator.Val1)
                 {
                     // Fill the current element with the specified value
                     data[x, y] = value;
@@ -148,7 +144,7 @@ namespace CastleGenerator.Tier0
             int maxStartIndex = -1;
             for (int x = 0; x < columns; ++x)
             {
-                if (data[x, 0] == Val1)
+                if (data[x, 0] == CastleGenerator.Val1)
                 {
                     curCounter++;
                 }
