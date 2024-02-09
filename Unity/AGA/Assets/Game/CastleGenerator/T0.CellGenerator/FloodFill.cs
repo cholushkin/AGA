@@ -27,9 +27,9 @@ namespace CastleGenerator.Tier0
 
             var basement = GetBasement(data, basementRect);
 
-            if (basement.index != -1 && basement.length >= 2)
+            if (basement.length >= 2)
             {
-                Fill(data, basement.entranceIndex, 0, CastleGenerator.Val2);
+                Fill(data, basement.startIndex + basement.length/2, 0, CastleGenerator.Val2);
                 if (removeDiagonals)
                     RemoveDiagonals(data);
             }
@@ -134,35 +134,38 @@ namespace CastleGenerator.Tier0
             FillConnected(startx, starty);
         }
 
-        private (int index, int length, int entranceIndex) GetBasement(byte[,] data, Rect basementRect)
+        // Basement is the longest coherent sequence (the first)
+        private (int startIndex, int length) GetBasement(byte[,] data, Rect basementRect)
         {
             int columns = data.GetLength(0);
-            int rows = data.GetLength(1);
 
-            int curCounter = 0;
-            int max = 0;
-            int maxStartIndex = -1;
+            int coherentSequenceStartIndex = 0;
+            int coherentCounter = 0;
+            (int start,int length) longestSeq = (0,0);
+            bool insideCoherentSeq = false;
+            
+            
             for (int x = 0; x < columns; ++x)
             {
                 if (data[x, 0] == CastleGenerator.Val1)
                 {
-                    curCounter++;
+                    if (!insideCoherentSeq)
+                        coherentSequenceStartIndex = x;
+                    insideCoherentSeq = true;
+                    coherentCounter++;
                 }
                 else
                 {
-                    // End of sequence
-                    var startIndex = x - curCounter;
-                    if (curCounter > max)
-                    {
-                        max = curCounter;
-                        maxStartIndex = startIndex;
-                    }
-
-                    curCounter = 0;
+                    if (insideCoherentSeq && coherentCounter > longestSeq.length)
+                        longestSeq = (coherentSequenceStartIndex, coherentCounter);
+                    insideCoherentSeq = false;
+                    coherentCounter = 0;
                 }
             }
+            if (coherentCounter >= longestSeq.length)
+                longestSeq = (coherentSequenceStartIndex, coherentCounter);
 
-            return (maxStartIndex, max, maxStartIndex + max / 2);
+            return longestSeq;
         }
     }
 }

@@ -38,6 +38,7 @@ namespace CastleGenerator
         private IPseudoRandomNumberGenerator _rndTier0;
         private int _cellPatternPickIteration;
         private int _cellFillIteration;
+        private CellPattern _cellPattern;
 
         [Header("Tier 1")]
         // =============================================
@@ -97,17 +98,17 @@ namespace CastleGenerator
                 LogT0.Print(LogChecker.Level.Verbose, $"T0. Cell pattern pick iteration {_cellPatternPickIteration}.");
                 CellPatternOutput.DestroyChildren();
                 await UniTask.Yield();
-                var cellPattern = Instantiate(CellPatternProvider.GetRandom(), CellPatternOutput);
-                cellPattern.transform.localPosition = Vector3.zero;
-                cellPattern.Init(_rndTier0, LogT0); // Propagate seed
+                _cellPattern = Instantiate(CellPatternProvider.GetRandom(), CellPatternOutput);
+                _cellPattern.transform.localPosition = Vector3.zero;
+                _cellPattern.Init(_rndTier0, LogT0); // Propagate seed
                 fillIterationCurrentPat = 0;
 
                 do
                 {
                     LogT0.Print(LogChecker.Level.Verbose, $"T0. Fill attempt iteration {fillIterationCurrentPat}.");
-                    await CellGenerator.Generate(cellPattern);
+                    await CellGenerator.Generate(_cellPattern);
                     if (VisualizeTier0)
-                        await CellGeneratorVisualizer.Visualize(CellGenerator, cellPattern.Bounds);
+                        await CellGeneratorVisualizer.Visualize(CellGenerator, _cellPattern.Bounds);
 
                     LogT0.Print(LogChecker.Level.Verbose, $"Cell generator status: {CellGenerator.Status}.");
                     ++fillIterationCurrentPat;
@@ -140,7 +141,7 @@ namespace CastleGenerator
         {
             (_rndTier2, SeedTier2) = SetTierSeed(SeedTier2);
             LogT2.Print(LogChecker.Level.Normal, $"T2 Seed: {SeedTier2}");
-            ChunkGenerator.Init(_polyominoProvider, CastlePolyominoGenerator, _rndTier2, LogT2);
+            ChunkGenerator.Init(_polyominoProvider, CastlePolyominoGenerator, _cellPattern.Bounds.min, _rndTier2, LogT2);
             await ChunkGenerator.Generate();
         }
 

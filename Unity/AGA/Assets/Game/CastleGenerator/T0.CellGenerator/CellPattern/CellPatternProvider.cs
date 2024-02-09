@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using GameLib.Log;
 using GameLib.Random;
 using UnityEngine;
@@ -6,10 +8,10 @@ using UnityEngine;
 namespace CastleGenerator.Tier0
 {
     // todo: Provider variant with each cell pattern probabilities
-    // todo: Provider variant which populate from specified resource folder and generation parameter
     public class CellPatternProvider : MonoBehaviour
     {
-        public CellPattern[] CellPatternsPool;
+        public List<CellPattern> CellPatterns;
+        public List<CellPatternProviderPopulatorBase> Populators; 
         private IPseudoRandomNumberGenerator _rnd;
         private LogChecker _log;
         
@@ -18,17 +20,19 @@ namespace CastleGenerator.Tier0
             _log = log;
             _rnd = rnd;
             _log.Print(LogChecker.Level.Normal, "CellPatternProvider.Init", transform);
-            Populate();
+            foreach (var populator in Populators)
+                populator.Populate(this);
         }
         
-        void Populate()
+        public void Populate(List<CellPattern> patterns)
         {
-            _log.Print(LogChecker.Level.Verbose, $"CellPatternProvider uses static array of patterns CellPatternsPool. {CellPatternsPool.Length} items.");
+            CellPatterns.AddRange(patterns);
+            CellPatterns = CellPatterns.Distinct().ToList();
         }
 
         public CellPattern GetRandom()
         {
-            return _rnd.FromArray(CellPatternsPool);
+            return _rnd.FromList(CellPatterns);
         }
     }
 }

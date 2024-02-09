@@ -4,6 +4,7 @@ using CastleGenerator.Tier0;
 using Cysharp.Threading.Tasks;
 using GameLib.Log;
 using GameLib.Random;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Assertions;
 using CellGeneratorController = CastleGenerator.Tier0.CellGeneratorController;
@@ -89,7 +90,9 @@ namespace CastleGenerator.Tier1
                             {
                                 PlaceCells(pieceLocationVar);
                                 _pieceTypeSpawnedCounter[pieceIndex]++;
-                                _placedPolyominos.Add((pv, p));
+                                int minX = pieceLocationVar.Min(v => v.x);
+                                int minY = pieceLocationVar.Min(v => v.y);
+                                _placedPolyominos.Add((new Vector2Int(minX, minY), p));
                                 UpdatePerimeter(_perimeter, pieceLocationVar);
                                 _normProbsCurrent = UpdateProbabilities(initialEmptyCellCount);
 
@@ -242,6 +245,14 @@ namespace CastleGenerator.Tier1
         {
             // Check if the new position is within the grid bounds
             return (x >= 0 && x < _width && y >= 0 && y < _height);
+        }
+
+
+        [Button]
+        private void DbgPrintPlaced()
+        {
+            foreach (var placed in _placedPolyominos)
+                Debug.Log($"{placed}");
         }
     }
 }

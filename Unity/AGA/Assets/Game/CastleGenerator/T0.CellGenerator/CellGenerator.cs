@@ -52,6 +52,7 @@ namespace CastleGenerator.Tier0
             Data = Merge(cellPattern.Bounds, cellPattern.ObligatoryRects.Concat(cellPattern.OptionalRects).ToList(), cellPattern);
             var floodFill = new FloodFill();
             floodFill.Fill(Data, cellPattern.BasementRect, cellPattern.ObligatoryRects.Select(x=>x.Item1).ToList(), RemoveDiagonals);
+            _log.Print($"FloodFill result: {floodFill.FloodFillStatus}");
             Status = floodFill.FloodFillStatus == FloodFill.Status.Pass ? 
                 ResultStatus.Success : ResultStatus.Failed;
 
