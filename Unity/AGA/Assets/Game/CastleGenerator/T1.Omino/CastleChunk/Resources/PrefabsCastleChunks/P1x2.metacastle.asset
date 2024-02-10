@@ -9,15 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ddf9bedf788d3a4eb5433335f7ff256, type: 3}
-  m_Name: P2x2.005.cmeta
+  m_Script: {fileID: 11500000, guid: 81797cf58193dcf42a9d455547e891e9, type: 3}
+  m_Name: P1x2.metacastle
   m_EditorClassIdentifier: 
-  ChunkName: P2x2.005
+  ChunkName: P1x2
   ChunkControllerType: 1
   TagSet:
     Tags: []
   Generation: 0
   ChunkMargin: 1
-  AABB: {x: 4.5431004, y: 4, z: 3.1184773}
+  AABB: {x: 4.000001, y: 6, z: 3.690513}
   OBB: {x: 0, y: 0, z: 0}
   ImportSource: {fileID: 11400000, guid: d57440a3c6414fb41a02edcabb61e02f, type: 2}
+  Shape: '#n#'

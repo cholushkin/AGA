@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81797cf58193dcf42a9d455547e891e9, type: 3}
-  m_Name: P2x2.005.metacastle
+  m_Name: P2x2.003.metacastle
   m_EditorClassIdentifier: 
-  ChunkName: P2x2.005
+  ChunkName: P2x2.003
   ChunkControllerType: 1
   TagSet:
     Tags: []
   Generation: 0
   ChunkMargin: 1
-  AABB: {x: 14.965967, y: 35.01201, z: 3.133292}
+  AABB: {x: 6.0399995, y: 6.016165, z: 4.4973516}
   OBB: {x: 0, y: 0, z: 0}
   ImportSource: {fileID: 11400000, guid: d57440a3c6414fb41a02edcabb61e02f, type: 2}
   Shape: '##n##'

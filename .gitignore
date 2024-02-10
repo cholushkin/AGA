@@ -78,3 +78,7 @@ crashlytics-build.properties
 /Unity/AGA/obj
 /ArtSources/Content.blend1
 /Unity/AGA/imgui.ini
+/Unity/AGA/.idea/.idea.AGA/.idea/.gitignore
+/Unity/AGA/.idea/.idea.AGA/.idea/encodings.xml
+/Unity/AGA/.idea/.idea.AGA/.idea/indexLayout.xml
+/Unity/AGA/.idea/.idea.AGA/.idea/vcs.xml
