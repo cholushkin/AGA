@@ -89,6 +89,8 @@ namespace GameLib.ColorScheme
         [Button]
         public void AddRandomColorSource()
         {
+            if (InputSource == null)
+                InputSource = new List<ColorSource>();
             InputSource.Add(new ColorSource().Randomize());
         }
 

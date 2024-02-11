@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed235c4a6ef501148969ec6184eafdf9, type: 3}
-  m_Name: DefaultCastleAtlas
+  m_Name: CastleDefault_AtlasCreator
   m_EditorClassIdentifier: 
-  ColorScheme: {fileID: 11400000, guid: 5a46d6b1ada4ca54794599dd78e1eda4, type: 2}
-  Background: {r: 1, g: 1, b: 1, a: 0}
+  ColorScheme: {fileID: 11400000, guid: efb520441ea33ad429a7c11826b80e2d, type: 2}
+  Background: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   TextureAspects: {x: 256, y: 256}
   CellSize: {x: 8, y: 8}
   CellMargin: {x: 1, y: 1}
