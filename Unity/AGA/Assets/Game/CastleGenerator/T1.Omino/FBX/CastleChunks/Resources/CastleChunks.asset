@@ -19,7 +19,8 @@ MonoBehaviour:
   EnableImport: 1
   EnableCleanupFbxRoot: 1
   AddColliders: 0
-  ApplyMaterials: 0
+  ApplyMaterials: 1
+  CastleChunkMat: {fileID: 2100000, guid: f3824412bc589f14da5f6d5b9ee57c30, type: 2}
   Scale: 1
   _metasOutputPath: Assets/Game/CastleGenerator/T1.Omino/CastleChunk/Resources/PrefabsCastleChunks
   _chunksOutputPath: Assets/Game/CastleGenerator/T1.Omino/CastleChunk/Resources/PrefabsCastleChunks
