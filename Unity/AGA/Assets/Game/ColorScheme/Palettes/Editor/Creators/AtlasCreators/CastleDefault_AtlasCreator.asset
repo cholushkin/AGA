@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CastleDefault_AtlasCreator
   m_EditorClassIdentifier: 
   ColorScheme: {fileID: 11400000, guid: efb520441ea33ad429a7c11826b80e2d, type: 2}
-  Background: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+  Background: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   TextureAspects: {x: 256, y: 256}
-  CellSize: {x: 8, y: 8}
-  CellMargin: {x: 1, y: 1}
-  Layout: 2
+  CellSize: {x: 12, y: 16}
+  CellMargin: {x: 0, y: 0}
+  Layout: 3

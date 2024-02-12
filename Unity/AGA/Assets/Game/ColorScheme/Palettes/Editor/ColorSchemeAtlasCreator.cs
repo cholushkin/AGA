@@ -14,6 +14,7 @@ namespace GameLib.ColorScheme
             OneItemPerRow,
             OneItemPerRowWithNames,
             Columns,
+            ColumnsWithText,
         }
 
         public ColorScheme ColorScheme;
@@ -66,12 +67,12 @@ namespace GameLib.ColorScheme
                     }
 
                     if (Layout == AtlasLayout.OneItemPerRowWithNames)
-                        RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
+                        RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y,
+                            " " + item.Name, Color.white);
                     row--;
                 }
-
             }
-            else if (Layout == AtlasLayout.Columns)
+            else if (Layout == AtlasLayout.Columns || Layout == AtlasLayout.ColumnsWithText)
             {
                 var xOffset = 0;
                 var maxOnCurrentRow = 0;
@@ -96,8 +97,9 @@ namespace GameLib.ColorScheme
                     if (item.Palette.Length > maxOnCurrentRow)
                         maxOnCurrentRow = item.Palette.Length;
 
-                    if (Layout == AtlasLayout.OneItemPerRowWithNames)
-                        RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y, " " + item.Name, Color.black);
+                    if (Layout == AtlasLayout.ColumnsWithText)
+                        RenderTextToTexture(texture, xOffset * CellSize.x, row * CellSize.y, " " + item.Name,
+                            Color.white);
 
                     row--;
                     if (row < 0)
@@ -133,14 +135,16 @@ namespace GameLib.ColorScheme
 
 
         // Returns false if the cell is out of texture bounds
-        private bool DrawColorRect(Texture2D texture, int x, int y, Color color, int squareWidth, int squareHeight, bool useMargin = true)
+        private bool DrawColorRect(Texture2D texture, int x, int y, Color color, int squareWidth, int squareHeight,
+            bool useMargin = true)
         {
             var margin = useMargin ? 1 : 0;
             for (int ix = x + margin; ix < Mathf.Min(x + squareWidth - margin, texture.width); ix++)
-                for (int iy = y + margin; iy < Mathf.Min(y + squareHeight - margin, texture.height); iy++)
-                {
-                    texture.SetPixel(ix, iy, color);
-                }
+            for (int iy = y + margin; iy < Mathf.Min(y + squareHeight - margin, texture.height); iy++)
+            {
+                texture.SetPixel(ix, iy, color);
+            }
+
             return !(x < 0 || y < 0 || x + squareWidth > texture.width || y + squareHeight > texture.height);
         }
 
@@ -148,8 +152,8 @@ namespace GameLib.ColorScheme
         private void ClearTexture(Texture2D texture, Color clearColor)
         {
             for (int x = 0; x < texture.width; x++)
-                for (int y = 0; y < texture.height; y++)
-                    texture.SetPixel(x, y, clearColor);
+            for (int y = 0; y < texture.height; y++)
+                texture.SetPixel(x, y, clearColor);
         }
 
 
@@ -162,6 +166,7 @@ namespace GameLib.ColorScheme
             int caret = 0;
             int spacing = 1; // Additional space between characters
 
+
             for (int i = 0; i < text.Length; i++)
             {
                 int[,] pixels;
@@ -172,21 +177,25 @@ namespace GameLib.ColorScheme
                         for (int cx = 0; cx < pixels.GetLength(1); ++cx)
                         {
                             int pixel = pixels[cy, cx];
-                            Color color = (pixel == 1) ? textColor : Background;
+                            var bgColor = texture.GetPixel(caret + x + cx, y + 5 - cy);
+                            Color color = (pixel == 1) ? textColor : bgColor;
                             texture.SetPixel(caret + x + cx, y + 5 - cy, color);
                         }
                     }
+
                     charWidth = pixels.GetLength(1);
 
                     // Add a column of empty pixels
                     for (int extraY = 0; extraY < charHeight; ++extraY)
                     {
-                        texture.SetPixel(caret + charWidth + x, y + 5 - extraY, Background);
+                        var bgColor = texture.GetPixel(caret + charWidth + x, y + 5 - extraY);
+                        texture.SetPixel(caret + charWidth + x, y + 5 - extraY, bgColor);
                     }
 
                     caret += charWidth + spacing;
                 }
             }
+
             return texture;
         }
 
