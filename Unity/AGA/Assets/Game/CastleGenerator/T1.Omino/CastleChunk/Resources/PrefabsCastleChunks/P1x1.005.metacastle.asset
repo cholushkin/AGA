@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81797cf58193dcf42a9d455547e891e9, type: 3}
+  m_Name: P1x1.005.metacastle
+  m_EditorClassIdentifier: 
+  ChunkName: P1x1.005
+  ChunkControllerType: 1
+  TagSet:
+    Tags: []
+  Generation: 0
+  ChunkMargin: 1
+  AABB: {x: 4, y: 4, z: 3.5686383}
+  OBB: {x: 0, y: 0, z: 0}
+  ImportSource: {fileID: 11400000, guid: d57440a3c6414fb41a02edcabb61e02f, type: 2}
+  Shape: '#'
