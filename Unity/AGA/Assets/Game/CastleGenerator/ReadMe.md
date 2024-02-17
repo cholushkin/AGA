@@ -4,7 +4,11 @@
     * Общее количество ячеек замка.
     * Отсупы от AABB для будушей генерации extension nodes in chunks.
     * Максимальные пороги генерации замка (чтобы надолго не застревать на генерации силуэта).
-  * Pieces generator tier - фигуры замка. Тут мы задаём распределение фигур и их частот. Настройки алгоритма заполнения фигурами.
+  * Tier 1. Pieces generator tier - фигуры замка. Тут мы задаём распределение фигур и их частот.
+  * MetaTier 0. Setting distribution. Blobs of different setting distribution
+  * Tier 2. Chunk generation tier
+    * Spawn chunks using MetaTier0 distribution
+    * 
   * Decoration tier - Какие чанки используются с фильтром по поколению и сеттингу. Выбор колор схем и атласов. Генерация выступов и тайлов бэкграунда также происходит здесь. Пример фильтра чанков : Поклоения от 5 до 10 + 20% сеттинга maya, 80% сеттинга chess
     * Island chunk
     * Embedded chunks first
