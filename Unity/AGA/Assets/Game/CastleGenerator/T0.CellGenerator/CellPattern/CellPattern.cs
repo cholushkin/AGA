@@ -11,13 +11,16 @@ namespace CastleGenerator.Tier0
     public class CellPattern : MonoBehaviour
     {
         public List<CellChunkBase> Chunks { get; private set; } // Chunks in gen order
-        public List<(Rect,CellChunkBase)> ObligatoryRects { get; private set; }
-        public List<(Rect,CellChunkBase)> OptionalRects { get; private set; }
+        public List<(Rect, CellChunkBase)> ObligatoryRects { get; private set; }
+        public List<(Rect, CellChunkBase)> OptionalRects { get; private set; }
         public Rect BasementRect { get; private set; }
         public Bounds Bounds { get; private set; }
-        
+
         public CellChunkBase Basement;
         private LogChecker _log;
+
+        private const int XBoundsMargin = 5;
+        private const int YBoundsMargin = 5;
 
         public void Init(IPseudoRandomNumberGenerator rnd, LogChecker log)
         {
@@ -27,7 +30,8 @@ namespace CastleGenerator.Tier0
             Bounds = GetAABB(Chunks);
             (ObligatoryRects, OptionalRects) = GetChunkRects(Bounds, Chunks);
             PropagateRndToChunks(Chunks, rnd);
-            _log.Print(LogChecker.Level.Normal, $"CellPattern Init. Name: {name}. Chunks = {Chunks.Count}, Bounds = {Bounds}, Rects = {ObligatoryRects.Count + OptionalRects.Count}");
+            _log.Print(LogChecker.Level.Normal,
+                $"CellPattern Init. Name: {name}. Chunks = {Chunks.Count}, Bounds = {Bounds}, Rects = {ObligatoryRects.Count + OptionalRects.Count}");
         }
 
         private void PropagateRndToChunks(List<CellChunkBase> chunks, IPseudoRandomNumberGenerator rnd)
@@ -42,8 +46,9 @@ namespace CastleGenerator.Tier0
             var chunks = transform.GetComponentsInChildren<CellChunkBase>().ToList();
             return chunks.OrderBy(chunk => chunk is CellChunkClone).ToList();
         }
-        
-        private (List<(Rect, CellChunkBase)> obligatoryRect, List<(Rect,CellChunkBase)> optionalRects) GetChunkRects(Bounds bounds, List<CellChunkBase> chunks)
+
+        private (List<(Rect, CellChunkBase)> obligatoryRect, List<(Rect, CellChunkBase)> optionalRects) GetChunkRects(
+            Bounds bounds, List<CellChunkBase> chunks)
         {
             var obligatoryChunkRects = new List<(Rect, CellChunkBase)>(chunks.Count);
             var optionalChunkRects = new List<(Rect, CellChunkBase)>(chunks.Count);
@@ -55,7 +60,7 @@ namespace CastleGenerator.Tier0
                 var rect = new Rect(chunkOffsetX, chunkOffsetY, chunk.GetSize().width, chunk.GetSize().height);
                 if (chunk == Basement)
                     BasementRect = rect;
-                if(chunk.OptionalVisit)
+                if (chunk.OptionalVisit)
                     optionalChunkRects.Add((rect, chunk));
                 else
                     obligatoryChunkRects.Add((rect, chunk));
@@ -63,7 +68,7 @@ namespace CastleGenerator.Tier0
 
             return (obligatoryChunkRects, optionalChunkRects);
         }
-        
+
         private Bounds GetAABB(List<CellChunkBase> chunks)
         {
             var bounds = new Bounds();
@@ -83,8 +88,8 @@ namespace CastleGenerator.Tier0
             }
 
             // Set the values of the bounds object
-            bounds.min = new Vector3(minx, miny, 0f);
-            bounds.max = new Vector3(maxx, maxy, 0f);
+            bounds.min = new Vector3(minx - XBoundsMargin, miny, 0f);
+            bounds.max = new Vector3(maxx + XBoundsMargin, maxy + YBoundsMargin, 0f);
 
             return bounds;
         }

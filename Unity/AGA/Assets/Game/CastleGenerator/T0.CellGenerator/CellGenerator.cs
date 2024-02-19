@@ -32,8 +32,8 @@ namespace CastleGenerator.Tier0
         public async UniTask<byte[,]> Generate(CellPattern cellPattern)
         {
             _log.Print(LogChecker.Level.Normal, "[method]CellGeneratorController.Generate");
-            _log.Print(LogChecker.Level.Verbose,$"CellGeneratorController uses '{cellPattern.name}' CellPattern");
-            
+            _log.Print(LogChecker.Level.Verbose, $"CellGeneratorController uses '{cellPattern.name}' CellPattern");
+
             Status = ResultStatus.Processing;
             CellPattern = cellPattern;
 
@@ -49,17 +49,18 @@ namespace CastleGenerator.Tier0
             foreach (CellChunkBase chunk in cellPattern.Chunks)
                 chunk.Generate();
 
-            Data = Merge(cellPattern.Bounds, cellPattern.ObligatoryRects.Concat(cellPattern.OptionalRects).ToList(), cellPattern);
+            Data = Merge(cellPattern.Bounds, cellPattern.ObligatoryRects.Concat(cellPattern.OptionalRects).ToList(),
+                cellPattern);
             var floodFill = new FloodFill();
-            floodFill.Fill(Data, cellPattern.BasementRect, cellPattern.ObligatoryRects.Select(x=>x.Item1).ToList(), RemoveDiagonals);
+            floodFill.Fill(Data, cellPattern.BasementRect, cellPattern.ObligatoryRects.Select(x => x.Item1).ToList(),
+                RemoveDiagonals);
             _log.Print($"FloodFill result: {floodFill.FloodFillStatus}");
-            Status = floodFill.FloodFillStatus == FloodFill.Status.Pass ? 
-                ResultStatus.Success : ResultStatus.Failed;
+            Status = floodFill.FloodFillStatus == FloodFill.Status.Pass ? ResultStatus.Success : ResultStatus.Failed;
 
             return Data;
         }
 
-        private byte[,] Merge(Bounds bounds, List<(Rect,CellChunkBase)> rects, CellPattern cellPattern)
+        private byte[,] Merge(Bounds bounds, List<(Rect, CellChunkBase)> rects, CellPattern cellPattern)
         {
             byte[,] data = new byte[Mathf.RoundToInt(bounds.size.x), Mathf.RoundToInt(bounds.size.y)];
 
@@ -70,9 +71,10 @@ namespace CastleGenerator.Tier0
                 var chunkSize = chunk.GetSize();
 
                 for (int x = 0; x < chunkSize.width; ++x)
-                    for (int y = 0; y < chunkSize.height; ++y)
-                        data[(int) (rect.xMin + x), (int) rect.yMin + y] = (chunk.GetCell(x, y));
+                for (int y = 0; y < chunkSize.height; ++y)
+                    data[(int) (rect.xMin + x), (int) rect.yMin + y] = (chunk.GetCell(x, y));
             }
+
             return data;
         }
     }
