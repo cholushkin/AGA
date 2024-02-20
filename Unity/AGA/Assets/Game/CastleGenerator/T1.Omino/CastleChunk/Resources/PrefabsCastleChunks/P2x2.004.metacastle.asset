@@ -18,7 +18,7 @@ MonoBehaviour:
     Tags: []
   Generation: 0
   ChunkMargin: 1
-  AABB: {x: 6, y: 6, z: 3.955875}
+  AABB: {x: 4, y: 4, z: 2.8414438}
   OBB: {x: 0, y: 0, z: 0}
   ImportSource: {fileID: 11400000, guid: d57440a3c6414fb41a02edcabb61e02f, type: 2}
   Shape: '##n##'
