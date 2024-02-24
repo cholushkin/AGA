@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1733180281045347575}
   - component: {fileID: 7740299036662036769}
   - component: {fileID: 6447716803111750350}
-  - component: {fileID: 380834325046305581}
-  - component: {fileID: 4767903521744909370}
-  - component: {fileID: 3888418122423519424}
+  - component: {fileID: 2223615626967655078}
+  - component: {fileID: 6934350433068308232}
+  - component: {fileID: 7490114674096495318}
   m_Layer: 0
   m_Name: P1x1.004
   m_TagString: Untagged
@@ -86,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &380834325046305581
+--- !u!114 &2223615626967655078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
     AddContextHash: 0
     AddContextSiblingIndex: 0
     AddComponentName: 0
---- !u!114 &4767903521744909370
+--- !u!114 &6934350433068308232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shape: '#'
---- !u!114 &3888418122423519424
+--- !u!114 &7490114674096495318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fae53488c0d4841a5b8356d5fdda0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChunkController: {fileID: 380834325046305581}
+  ChunkController: {fileID: 2223615626967655078}
