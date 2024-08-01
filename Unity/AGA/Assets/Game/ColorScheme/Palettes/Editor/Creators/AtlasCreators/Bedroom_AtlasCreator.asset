@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bedroom_AtlasCreator
   m_EditorClassIdentifier: 
   ColorScheme: {fileID: 11400000, guid: 045a879cf14d2fa4c8b7c42ef7bb17da, type: 2}
-  Background: {r: 0, g: 0, b: 0, a: 0}
+  Background: {r: 0.31764707, g: 0.31764707, b: 0.31764707, a: 1}
   TextureAspects: {x: 512, y: 512}
   CellSize: {x: 12, y: 16}
   CellMargin: {x: 0, y: 0}
