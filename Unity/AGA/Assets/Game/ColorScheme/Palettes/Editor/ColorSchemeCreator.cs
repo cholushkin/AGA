@@ -72,6 +72,7 @@ namespace GameLib.ColorScheme
         public string OutputDirectory;
         public string ColorSchemeScriptableObjectName;
         public string ColorSchemeName;
+        public bool ShortNames;
 
         public List<ColorSource> InputSource;
 
@@ -132,7 +133,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateBrighten > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-brighten";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-brt" : $"{rootName}-brighten";
                     colorSchemeItem.Palette = new Color[source.GenerateBrighten];
 
                     for (int i = 0; i < source.GenerateBrighten; ++i)
@@ -145,7 +146,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateLighten > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-lighten";
+                    colorSchemeItem.Name = ShortNames ?  $"{rootName}-lgt" : $"{rootName}-lighten";
                     colorSchemeItem.Palette = new Color[source.GenerateLighten];
 
                     for (int i = 0; i < source.GenerateLighten; ++i)
@@ -158,7 +159,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateDarken > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-darken";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-drk" : $"{rootName}-darken";
                     colorSchemeItem.Palette = new Color[source.GenerateDarken];
 
                     for (int i = 0; i < source.GenerateDarken; ++i)
@@ -171,7 +172,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateTint > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-tinted";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-tnt" : $"{rootName}-tinted";
                     colorSchemeItem.Palette = new Color[source.GenerateTint];
 
                     for (int i = 0; i < source.GenerateTint; ++i)
@@ -184,7 +185,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateShade > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-shaded";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-shd" : $"{rootName}-shaded";
                     colorSchemeItem.Palette = new Color[source.GenerateShade];
 
                     for (int i = 0; i < source.GenerateShade; ++i)
@@ -197,7 +198,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateSaturate > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-saturated";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-str" : $"{rootName}-saturated";
                     colorSchemeItem.Palette = new Color[source.GenerateSaturate];
 
                     for (int i = 0; i < source.GenerateSaturate; ++i)
@@ -210,7 +211,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateDesaturate > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-desaturated";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-dst": $"{rootName}-desaturated";
                     colorSchemeItem.Palette = new Color[source.GenerateDesaturate];
 
                     for (int i = 0; i < source.GenerateDesaturate; ++i)
@@ -223,7 +224,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateMonochromatic > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-monochromatic";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-mnc": $"{rootName}-monochromatic";
                     colorSchemeItem.Palette = new Color[source.GenerateMonochromatic];
 
                     var mData = tinyColor.Monochromatic(source.GenerateMonochromatic);
@@ -237,7 +238,7 @@ namespace GameLib.ColorScheme
                 if (source.GenerateAnalogous > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-analogous";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-ang": $"{rootName}-analogous";
                     colorSchemeItem.Palette = new Color[source.GenerateAnalogous];
 
                     var aData = tinyColor.Analogous(source.GenerateAnalogous);
@@ -251,7 +252,7 @@ namespace GameLib.ColorScheme
                 if (source.GeneratePolyad > 0)
                 {
                     var colorSchemeItem = new ColorScheme.ColorItem();
-                    colorSchemeItem.Name = $"{rootName}-{source.GeneratePolyad}polyad";
+                    colorSchemeItem.Name = ShortNames ? $"{rootName}-{source.GeneratePolyad}pd": $"{rootName}-{source.GeneratePolyad}polyad";
                     colorSchemeItem.Palette = new Color[source.GeneratePolyad];
 
                     var pData = tinyColor.Polyad(source.GeneratePolyad);
