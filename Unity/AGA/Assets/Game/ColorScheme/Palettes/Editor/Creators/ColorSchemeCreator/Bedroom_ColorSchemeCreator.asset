@@ -15,7 +15,7 @@ MonoBehaviour:
   OutputDirectory: Game/ColorScheme/Palettes
   ColorSchemeScriptableObjectName: BedroomColors
   ColorSchemeName: Bedroom colors
-  ShortNames: 1
+  ShortNames: 0
   InputSource:
   - Name: black-n-white
     ShortenedName: bw

@@ -66,7 +66,7 @@ namespace GameLib.ColorScheme
                     // Draw color cells
                     for (int i = 0; i < item.Palette.Length; ++i)
                     {
-                        if (!DrawCell(texture, i, row, item.Palette[i]))
+                        if (!DrawCell(texture, i, row, item.Palette[i], Background))
                             Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
                     }
 
@@ -92,7 +92,7 @@ namespace GameLib.ColorScheme
                     // Draw color cells
                     for (int i = 0; i < item.Palette.Length; ++i)
                     {
-                        if (!DrawCell(texture, xOffset + i, row, item.Palette[i]))
+                        if (!DrawCell(texture, xOffset + i, row, item.Palette[i], Background))
                             Debug.LogWarning($"Drawing out of bounds xy={i},{row}");
                     }
 
@@ -127,25 +127,29 @@ namespace GameLib.ColorScheme
 
         #region API
 
-        private bool DrawCell(Texture2D texture, int cellX, int cellY, Color color)
+        private bool DrawCell(Texture2D texture, int cellX, int cellY, Color color, Color bg)
         {
             // Calculate the pixel coordinates of the top-left corner of the cell
             int x = cellX * CellSize.x;
             int y = cellY * CellSize.y;
 
-            return DrawColorRect(texture, x, y, color, CellSize.x, CellSize.y);
+            return DrawColorRect(texture, x, y, color, bg, CellSize.x, CellSize.y, CellMargin.x, CellMargin.y);
         }
 
 
         // Returns false if the cell is out of texture bounds
-        private bool DrawColorRect(Texture2D texture, int x, int y, Color color, int squareWidth, int squareHeight,
-            bool useMargin = true)
+        private bool DrawColorRect(Texture2D texture, int x, int y, Color color, Color bg, int squareWidth, int squareHeight,
+            int marginX, int marginY)
         {
-            var margin = useMargin ? 1 : 0;
-            for (int ix = x + margin; ix < Mathf.Min(x + squareWidth - margin, texture.width); ix++)
-            for (int iy = y + margin; iy < Mathf.Min(y + squareHeight - margin, texture.height); iy++)
+            for (int ix = x /*+ margin*/; ix < Mathf.Min(x + squareWidth /*- margin*/, texture.width); ix++)
+            for (int iy = y /*+ margin*/; iy < Mathf.Min(y + squareHeight/* - margin*/, texture.height); iy++)
             {
-                texture.SetPixel(ix, iy, color);
+                if (ix >= x + squareWidth - marginX || iy < y + marginY )
+                {
+                    texture.SetPixel(ix, iy, Background);
+                }
+                else
+                    texture.SetPixel(ix, iy, color);
             }
 
             return !(x < 0 || y < 0 || x + squareWidth > texture.width || y + squareHeight > texture.height);

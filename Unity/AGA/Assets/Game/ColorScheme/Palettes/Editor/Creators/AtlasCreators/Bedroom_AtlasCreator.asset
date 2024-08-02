@@ -15,6 +15,6 @@ MonoBehaviour:
   ColorScheme: {fileID: 11400000, guid: 045a879cf14d2fa4c8b7c42ef7bb17da, type: 2}
   Background: {r: 0.54088044, g: 0.54088044, b: 0.54088044, a: 1}
   TextureAspects: {x: 512, y: 512}
-  CellSize: {x: 12, y: 16}
-  CellMargin: {x: 0, y: 0}
+  CellSize: {x: 16, y: 16}
+  CellMargin: {x: 1, y: 1}
   Layout: 3
