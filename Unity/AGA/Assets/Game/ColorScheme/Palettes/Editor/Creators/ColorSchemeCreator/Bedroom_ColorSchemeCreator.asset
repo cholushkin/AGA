@@ -369,9 +369,9 @@ MonoBehaviour:
     GeneratePolyad: 0
   - Name: Lamp
     Color: {r: 0.7490196, g: 0.34509805, b: 0.36078432, a: 1}
-    Step: 0.1
+    Step: 0.2
     GenerateBrighten: 0
-    GenerateLighten: 0
+    GenerateLighten: 6
     GenerateDarken: 0
     GenerateTint: 0
     GenerateShade: 0
@@ -379,12 +379,12 @@ MonoBehaviour:
     GenerateDesaturate: 0
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
-    GeneratePolyad: 5
+    GeneratePolyad: 0
   - Name: LightWarm
     Color: {r: 0.9215687, g: 0.77647066, b: 0.5647059, a: 1}
-    Step: 0.1
+    Step: 0.2
     GenerateBrighten: 0
-    GenerateLighten: 0
+    GenerateLighten: 6
     GenerateDarken: 0
     GenerateTint: 0
     GenerateShade: 0
@@ -392,12 +392,12 @@ MonoBehaviour:
     GenerateDesaturate: 0
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
-    GeneratePolyad: 5
+    GeneratePolyad: 0
   - Name: LightCold
     Color: {r: 0.9607844, g: 0.89019614, b: 0.9450981, a: 1}
-    Step: 0.1
+    Step: 0.2
     GenerateBrighten: 0
-    GenerateLighten: 0
+    GenerateLighten: 6
     GenerateDarken: 0
     GenerateTint: 0
     GenerateShade: 0
@@ -405,30 +405,30 @@ MonoBehaviour:
     GenerateDesaturate: 0
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
-    GeneratePolyad: 5
+    GeneratePolyad: 0
   - Name: Pumpkin
     Color: {r: 0.75294125, g: 0.3647059, b: 0.16470589, a: 1}
-    Step: 0.1
-    GenerateBrighten: 0
+    Step: 0.2
+    GenerateBrighten: 6
     GenerateLighten: 0
-    GenerateDarken: 0
+    GenerateDarken: 6
     GenerateTint: 0
     GenerateShade: 0
     GenerateSaturate: 0
     GenerateDesaturate: 0
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
-    GeneratePolyad: 5
+    GeneratePolyad: 0
   - Name: LeatherWhite
     Color: {r: 0.854902, g: 0.79215693, b: 0.6509804, a: 1}
-    Step: 0.1
+    Step: 0.2
     GenerateBrighten: 0
     GenerateLighten: 0
     GenerateDarken: 0
-    GenerateTint: 0
+    GenerateTint: 6
     GenerateShade: 0
     GenerateSaturate: 0
     GenerateDesaturate: 0
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
-    GeneratePolyad: 5
+    GeneratePolyad: 0
