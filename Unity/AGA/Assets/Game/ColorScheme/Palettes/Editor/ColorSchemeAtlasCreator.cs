@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using NaughtyAttributes;
 using System.IO;
+using System.Linq;
+using TinyColorLib;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Color = UnityEngine.Color;
 
 namespace GameLib.ColorScheme
 {
@@ -68,7 +72,7 @@ namespace GameLib.ColorScheme
 
                     if (Layout == AtlasLayout.OneItemPerRowWithNames)
                         RenderTextToTexture(texture, item.Palette.Length * CellSize.x, row * CellSize.y,
-                            " " + item.Name, Color.white);
+                            " " + item.Name, null);
                     row--;
                 }
             }
@@ -98,8 +102,7 @@ namespace GameLib.ColorScheme
                         maxOnCurrentRow = item.Palette.Length;
 
                     if (Layout == AtlasLayout.ColumnsWithText)
-                        RenderTextToTexture(texture, xOffset * CellSize.x, row * CellSize.y, " " + item.Name,
-                            Color.white);
+                        RenderTextToTexture(texture, xOffset * CellSize.x, row * CellSize.y, " " + item.Name, null);
 
                     row--;
                     if (row < 0)
@@ -157,10 +160,10 @@ namespace GameLib.ColorScheme
         }
 
 
-        Texture2D RenderTextToTexture(Texture2D texture, int x, int y, string text, Color textColor)
+        Texture2D RenderTextToTexture(Texture2D texture, int x, int y, string text, Color? textColor)
         {
-            int charWidth = 5;
-            int charHeight = 5; // Height based on the pixel size and number of rows in the font
+            const int charHeight = 5; // Height based on the pixel size and number of rows in the font
+            List<TinyColor> textColors = new List<TinyColor> { new TinyColor(Color.white), new TinyColor(Color.black) };
 
             text = text.ToUpper();
             int caret = 0;
@@ -172,24 +175,44 @@ namespace GameLib.ColorScheme
                 int[,] pixels;
                 if (MiniPixelFontDictionary.Chars.TryGetValue(text[i], out pixels))
                 {
+                    var curCharColor = textColor;
+                    if (!textColor.HasValue) // autocolor
+                    {
+                        // Get all bg colors using LINQ
+                        var bgColors = Enumerable.Range(0, pixels.GetLength(0))
+                            .SelectMany(cy => Enumerable.Range(0, pixels.GetLength(1))
+                                .Select(cx => texture.GetPixel(caret + x + cx, y + charHeight - cy)))
+                            .ToList();
+
+                        // Find the dominant color
+                        Color dominantColor = bgColors
+                            .GroupBy(color => color)
+                            .OrderByDescending(group => group.Count())
+                            .First()
+                            .Key;
+
+                        // find good readability color for dominant color
+                        curCharColor = ReadabilityHelpers.MostReadable(new TinyColor(dominantColor), textColors).ToColor();
+                    }
+
                     for (int cy = 0; cy < pixels.GetLength(0); ++cy)
                     {
                         for (int cx = 0; cx < pixels.GetLength(1); ++cx)
                         {
                             int pixel = pixels[cy, cx];
-                            var bgColor = texture.GetPixel(caret + x + cx, y + 5 - cy);
-                            Color color = (pixel == 1) ? textColor : bgColor;
-                            texture.SetPixel(caret + x + cx, y + 5 - cy, color);
+                            var bgColor = texture.GetPixel(caret + x + cx, y + charHeight - cy);
+                            Color color = (pixel == 1) ? curCharColor.Value : bgColor;
+                            texture.SetPixel(caret + x + cx, y + charHeight - cy, color);
                         }
                     }
 
-                    charWidth = pixels.GetLength(1);
+                    int charWidth = pixels.GetLength(1);
 
                     // Add a column of empty pixels
                     for (int extraY = 0; extraY < charHeight; ++extraY)
                     {
-                        var bgColor = texture.GetPixel(caret + charWidth + x, y + 5 - extraY);
-                        texture.SetPixel(caret + charWidth + x, y + 5 - extraY, bgColor);
+                        var bgColor = texture.GetPixel(caret + charWidth + x, y + charHeight - extraY);
+                        texture.SetPixel(caret + charWidth + x, y + charHeight - extraY, bgColor);
                     }
 
                     caret += charWidth + spacing;
