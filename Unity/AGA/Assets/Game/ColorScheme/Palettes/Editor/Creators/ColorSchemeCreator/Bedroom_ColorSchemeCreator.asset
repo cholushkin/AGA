@@ -18,6 +18,7 @@ MonoBehaviour:
   ShortNames: 1
   InputSource:
   - Name: black-n-white
+    ShortenedName: bw
     Color: {r: 1, g: 1, b: 1, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -30,7 +31,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Wall
+  - Name: wall
+    ShortenedName: wall
     Color: {r: 0.19607845, g: 0.37647063, b: 0.38431376, a: 1}
     Step: 0.1
     GenerateBrighten: 6
@@ -43,7 +45,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: WallPaint
+  - Name: wall-paint
+    ShortenedName: wall-pnt
     Color: {r: 0.19215688, g: 0.3921569, b: 0.52156866, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -56,7 +59,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 5
-  - Name: Floor
+  - Name: floor
+    ShortenedName: flr
     Color: {r: 0.57254905, g: 0.30588236, b: 0.23921569, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -69,7 +73,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Wood
+  - Name: wood
+    ShortenedName: wood
     Color: {r: 0.41960788, g: 0.21176472, b: 0.19215688, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -82,7 +87,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Shelve
+  - Name: shelve
+    ShortenedName: shlv
     Color: {r: 0.654902, g: 0.4666667, b: 0.34901962, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -95,7 +101,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Blanket
+  - Name: blanket
+    ShortenedName: blnkt
     Color: {r: 0.6, g: 0.4156863, b: 0.48627454, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -108,7 +115,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Pillow
+  - Name: pillow
+    ShortenedName: pilw
     Color: {r: 0.6039216, g: 0.60784316, b: 0.4431373, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -121,7 +129,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Carpet
+  - Name: carpet
+    ShortenedName: crpt
     Color: {r: 0.5411765, g: 0.41960788, b: 0.49803925, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -134,7 +143,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Computer
+  - Name: computer
+    ShortenedName: comp
     Color: {r: 0.654902, g: 0.6, b: 0.5137255, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -147,7 +157,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Mug
+  - Name: mug
+    ShortenedName: mug
     Color: {r: 0.8352942, g: 0.5764706, b: 0.35686275, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -160,7 +171,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Stuff
+  - Name: stuff
+    ShortenedName: stf
     Color: {r: 0.6039216, g: 0.30588236, b: 0.15686275, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -173,7 +185,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: StuffSecondary
+  - Name: stuff-2nd
+    ShortenedName: stf2
     Color: {r: 0.31764707, g: 0.21176472, b: 0.098039225, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -186,7 +199,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Socks
+  - Name: socks
+    ShortenedName: soks
     Color: {r: 0.7568628, g: 0.54509807, b: 0.18823531, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -199,7 +213,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 6
-  - Name: PlushToy
+  - Name: plush-toy
+    ShortenedName: ptoy
     Color: {r: 0.79215693, g: 0.57254905, b: 0.7058824, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -212,7 +227,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: WhitePlastic
+  - Name: white-plastic
+    ShortenedName: wpls
     Color: {r: 0.854902, g: 0.8352942, b: 0.8196079, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -225,7 +241,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: RedPlastic
+  - Name: red-plastic
+    ShortenedName: rpls
     Color: {r: 0.7686275, g: 0.2627451, b: 0.3137255, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -238,7 +255,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: BluePlastic
+  - Name: blue-plastic
+    ShortenedName: bpls
     Color: {r: 0.13725491, g: 0.50980395, b: 0.5372549, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -251,7 +269,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Plant
+  - Name: plant
+    ShortenedName: plnt
     Color: {r: 0.427451, g: 0.56078434, b: 0.10196079, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -264,7 +283,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 6
-  - Name: WhiteMetal
+  - Name: white-metal
+    ShortenedName: wmtl
     Color: {r: 0.7960785, g: 0.8117648, b: 0.80392164, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -277,7 +297,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: BlackMetal
+  - Name: black-metal
+    ShortenedName: bmtl
     Color: {r: 0.11764707, g: 0.08235294, b: 0.1254902, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -290,7 +311,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Gold
+  - Name: gold
+    ShortenedName: gld
     Color: {r: 0.87843144, g: 0.6627451, b: 0.4784314, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -303,7 +325,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Paper
+  - Name: paper
+    ShortenedName: ppr
     Color: {r: 0.93725497, g: 0.89019614, b: 0.92549026, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -316,7 +339,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 5
-  - Name: Glass
+  - Name: glass
+    ShortenedName: gls
     Color: {r: 0.95294124, g: 0.9294118, b: 0.8980393, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -329,7 +353,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Mirror
+  - Name: mirror
+    ShortenedName: mrr
     Color: {r: 0.9490197, g: 0.86666673, b: 0.86274517, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -342,7 +367,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Book
+  - Name: book
+    ShortenedName: bk
     Color: {r: 0.5294118, g: 0.50980395, b: 0.7372549, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -355,7 +381,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 5
-  - Name: BooksSecondary
+  - Name: books-2nd
+    ShortenedName: bk2
     Color: {r: 0.8196079, g: 0.54509807, b: 0.52156866, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -368,7 +395,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 6
     GeneratePolyad: 0
-  - Name: Lamp
+  - Name: lamp
+    ShortenedName: lmp
     Color: {r: 0.7490196, g: 0.34509805, b: 0.36078432, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -381,7 +409,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: LightWarm
+  - Name: light-warm
+    ShortenedName: lwrm
     Color: {r: 0.9215687, g: 0.77647066, b: 0.5647059, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -394,7 +423,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: LightCold
+  - Name: light-cold
+    ShortenedName: lcld
     Color: {r: 0.9607844, g: 0.89019614, b: 0.9450981, a: 1}
     Step: 0.2
     GenerateBrighten: 0
@@ -407,7 +437,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: Pumpkin
+  - Name: pumpkin
+    ShortenedName: pmp
     Color: {r: 0.75294125, g: 0.3647059, b: 0.16470589, a: 1}
     Step: 0.2
     GenerateBrighten: 6
@@ -420,7 +451,8 @@ MonoBehaviour:
     GenerateMonochromatic: 0
     GenerateAnalogous: 0
     GeneratePolyad: 0
-  - Name: LeatherWhite
+  - Name: leather-white
+    ShortenedName: wleat
     Color: {r: 0.854902, g: 0.79215693, b: 0.6509804, a: 1}
     Step: 0.2
     GenerateBrighten: 0
