@@ -61,6 +61,7 @@ sysinfo.txt
 *.unitypackage
 *.app
 
+
 # Crashlytics generated file
 crashlytics-build.properties
 
@@ -70,13 +71,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
 /Unity/AGA/.vsconfig
 /Unity/AGA/Library
 /Unity/AGA/Temp
 /Unity/AGA/Logs
 /Unity/AGA/UserSettings
 /Unity/AGA/obj
-/ArtSources/Content.blend1
 /Unity/AGA/imgui.ini
 /Unity/AGA/.idea/.idea.AGA/.idea/.gitignore
 /Unity/AGA/.idea/.idea.AGA/.idea/encodings.xml
@@ -84,3 +85,4 @@ crashlytics-build.properties
 /Unity/AGA/.idea/.idea.AGA/.idea/vcs.xml
 /ArtSources/CastleChunks/CastleChunks.blend1
 /References
+*.blend1
